@@ -1,0 +1,33 @@
+/* ایران نرخ - استایل مشترک همه صفحه‌ها */
+:root{--ink:#142421;--brass:#b8892b;--brass-d:#8a6414;--paper:#f4f0e6;--card:#fffdf8;--line:#d9d1bd;--muted:#5b625e}
+*{box-sizing:border-box}
+html{scroll-padding-top:16px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Tahoma,"Segoe UI",system-ui,sans-serif;line-height:1.9;font-size:16px}
+header{background:var(--ink);color:#f4f0e6;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+header a{color:#e8c872;text-decoration:none;font-weight:700}
+main{max-width:640px;margin:0 auto;padding:28px 18px 48px}
+h1{font-size:1.6rem;line-height:1.5;margin:0 0 8px}
+h2{font-size:1.2rem;margin:40px 0 12px}
+.lead{color:var(--muted);margin:0 0 24px}
+.calc{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px}
+label{display:block;font-weight:700;margin:0 0 4px}
+.hint{font-size:.85rem;color:var(--muted);font-weight:400}
+input{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);margin-bottom:16px;direction:ltr;text-align:right}
+input:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+.result{margin-top:4px;border-top:2px solid var(--brass);padding-top:16px}
+.big{font-size:2.6rem;font-weight:700;color:var(--brass-d);line-height:1.2;direction:ltr;text-align:right}
+.big small{font-size:1rem;color:var(--muted);font-weight:400}
+.rows{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.rows div{background:var(--paper);border-radius:6px;padding:8px 12px}
+.rows b{display:block;direction:ltr;text-align:right}
+.err{color:#9b2c1d;min-height:1.6em;margin:0}
+details{background:var(--card);border:1px solid var(--line);border-radius:8px;margin-bottom:10px;padding:0 16px}
+summary{cursor:pointer;font-weight:700;padding:12px 0}
+details p{margin:0 0 14px}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.links a{background:var(--ink);color:#f4f0e6;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700}
+.note{font-size:.85rem;color:var(--muted);margin-top:36px}
+@media(max-width:420px){.big{font-size:2.2rem}.rows{grid-template-columns:1fr}}
+nav{display:flex;gap:16px;flex-wrap:wrap}
+nav a{color:#e8c872;text-decoration:none;font-weight:700;padding:4px 0;border-bottom:2px solid transparent}
+nav a[aria-current=page]{border-bottom-color:#e8c872}
