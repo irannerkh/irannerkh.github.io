@@ -6,6 +6,7 @@
 <title>ایران نرخ | قیمت طلا، سکه و دلار</title>
 <meta name="description" content="ایران نرخ: قیمت لحظه‌ای طلا، سکه و دلار، تحلیل و خبر روزانه طلا، تقویم اقتصادی و ربات رایگان تلگرام با هشدار قیمت و ماشین‌حساب ریسک.">
 <meta name="keywords" content="قیمت طلا امروز, قیمت سکه, قیمت دلار, ربات تلگرام طلا, تحلیل طلا, تقویم اقتصادی, هشدار قیمت, ایران نرخ">
+<link rel="canonical" href="https://irannerkh.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fa_IR">
 <meta property="og:title" content="ایران نرخ | قیمت طلا، سکه و دلار">
@@ -45,6 +46,12 @@
     line-height: 1.9;
     padding: env(safe-area-inset-top, 0) 0 env(safe-area-inset-bottom, 0);
   }
+  .topbar { background: var(--card); border-bottom: 1px solid var(--line); padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .topbar strong { color: var(--gold-soft); }
+  .menu { display: flex; gap: 16px; flex-wrap: wrap; }
+  .menu a { color: var(--muted); text-decoration: none; font-weight: 700; padding: 2px 0; border-bottom: 2px solid transparent; }
+  .menu a[aria-current=page] { color: var(--gold-soft); border-bottom-color: var(--gold); }
+  a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
   .wrap { max-width: 620px; margin: 0 auto; padding: 28px 18px 48px; }
   header { text-align: center; padding: 18px 0 8px; }
   .logo {
@@ -88,6 +95,13 @@
 </style>
 </head>
 <body>
+<div class="topbar">
+  <strong>ایران نرخ</strong>
+  <nav class="menu" aria-label="منوی اصلی">
+    <a href="/" aria-current="page">خانه</a>
+    <a href="/tools.html">ابزارها</a>
+  </nav>
+</div>
 <div class="wrap">
 
   <header>
@@ -108,6 +122,10 @@
     <a class="btn" href="https://www.instagram.com/irannerkhh/" rel="noopener">
       <span class="ic">📸</span>
       <span><b>صفحه اینستاگرام</b><small>آموزش و تحلیل کوتاه</small></span>
+    </a>
+    <a class="btn" href="/tools.html">
+      <span class="ic">🧮</span>
+      <span><b>ماشین‌حساب ریسک طلا</b><small>حجم مناسب معامله را همین‌جا حساب کنید</small></span>
     </a>
   </nav>
 
