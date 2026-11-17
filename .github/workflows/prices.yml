@@ -1,0 +1,42 @@
+name: Update prices
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: prices
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yfinance
+      - name: Fetch prices
+        run: |
+          python - <<'EOF'
+          import json, datetime
+          import yfinance as yf
+          S = {"gold": "GC=F", "silver": "SI=F", "oil": "CL=F", "btc": "BTC-USD", "eth": "ETH-USD"}
+          items = {}
+          for k, sym in S.items():
+              try:
+                  h = yf.Ticker(sym).history(period="5d", interval="1d")["Close"].dropna()
+                  last, prev = float(h.iloc[-1]), float(h.iloc[-2])
+                  items[k] = {"price": round(last, 2), "change": round((last / prev - 1) * 100, 2)}
+              except Exception as e:
+                  print(sym, e)
+          if items:
+              now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+              json.dump({"updated": now, "items": items}, open("prices.json", "w"))
+          EOF
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add prices.json
+          git diff --staged --quiet || (git commit -m "update prices" && git push)
