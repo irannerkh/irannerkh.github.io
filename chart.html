@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>نمودار زنده طلا (XAUUSD) | ایران نرخ</title>
+<meta name="description" content="نمودار زنده اونس طلا به دلار (XAUUSD) با ابزارهای رسم و اندیکاتور. تایم‌فریم و نوع نمودار را خودتان انتخاب کنید.">
+<link rel="canonical" href="https://irannerkh.github.io/chart.html">
+<link rel="stylesheet" href="/style.css">
+<style>
+.chartbox{height:520px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+.tradingview-widget-container,.tradingview-widget-container__widget{height:100%;width:100%}
+.fallback{color:var(--muted);font-size:.9rem;margin-top:12px}
+</style>
+</head>
+<body>
+<header><strong>ایران نرخ</strong>
+<nav aria-label="منوی اصلی"><a href="/">خانه</a><a href="/prices.html">قیمت‌ها</a><a href="/chart.html" aria-current="page">نمودار</a><a href="/analysis.html">تحلیل‌ها</a><a href="/tools.html">ابزارها</a></nav></header>
+<main>
+<h1>نمودار زنده طلا (XAUUSD)</h1>
+<p class="lead">نمودار اونس طلا به دلار. تایم‌فریم، نوع نمودار، اندیکاتور و ابزارهای رسم را از خود نمودار انتخاب کنید.</p>
+<div class="chartbox">
+<div class="tradingview-widget-container">
+<div class="tradingview-widget-container__widget"></div>
+<script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+{
+  "autosize": true,
+  "symbol": "OANDA:XAUUSD",
+  "interval": "60",
+  "timezone": "Asia/Tehran",
+  "theme": "dark",
+  "style": "1",
+  "locale": "fa_IR",
+  "backgroundColor": "#17171b",
+  "allow_symbol_change": true,
+  "hide_side_toolbar": false,
+  "support_host": "https://www.tradingview.com"
+}
+</script>
+</div>
+</div>
+<p class="fallback">اگر نمودار بارگذاری نشد، فیلترشکن را روشن کنید و صفحه را دوباره باز کنید؛ این نمودار از سرویس TradingView می‌آید. نمودار از <a href="https://www.tradingview.com/symbols/XAUUSD/" rel="noopener" style="color:var(--gold-soft)">TradingView</a> است.</p>
+<p class="note">این نمودار آموزشی و اطلاع‌رسانی است و توصیه‌ی مالی نیست. معامله در بازارهای مالی ریسک دارد. برای حساب حجم معامله از <a href="/tools.html" style="color:var(--gold-soft)">ماشین‌حساب ریسک طلا</a> استفاده کنید.</p>
+</main>
+</body>
+</html>
