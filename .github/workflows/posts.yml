@@ -1,0 +1,107 @@
+name: Build posts
+on:
+  push:
+    paths:
+      - "posts/*.md"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: posts
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build pages
+        run: |
+          python3 - <<'EOF'
+          import re, glob, os, html, json
+          E = html.escape
+          BASE = "https://irannerkh.github.io"
+          DISC = "این نوشته آموزشی است و توصیه مالی نیست. معامله در بازارهای مالی ریسک دارد."
+          HEAD = """<!DOCTYPE html>
+          <html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>@@T@@</title><meta name="description" content="@@D@@"><link rel="canonical" href="@@U@@">
+          <link rel="stylesheet" href="/style.css">
+          <style>article p,article li{margin:0 0 14px}article ul{padding:0 20px 0 0}.meta{color:var(--muted);font-size:.9rem}.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px;color:var(--text);text-decoration:none}.card b{color:var(--gold-soft)}.card span{color:var(--muted);font-size:.9rem}.tag{color:var(--gold);font-size:.85rem}</style>
+          </head><body>
+          <header><strong>ایران نرخ</strong><nav aria-label="منوی اصلی"><a href="/">خانه</a><a href="/prices.html">قیمت‌ها</a><a href="/analysis.html">تحلیل‌ها</a><a href="/tools.html">ابزارها</a></nav></header>
+          <main>"""
+          TAIL = """</main><script>document.querySelectorAll("time[datetime]").forEach(function(t){try{t.textContent=new Date(t.dateTime).toLocaleDateString("fa-IR",{dateStyle:"long"})}catch(e){}})</script></body></html>"""
+          def head(t, d, u):
+              return HEAD.replace("@@T@@", E(t)).replace("@@D@@", E(d)).replace("@@U@@", u)
+          def inline(s):
+              s = E(s)
+              s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
+              s = re.sub(r"\[(.+?)\]\((https?://[^\s)]+)\)", r'<a href="\2" rel="noopener">\1</a>', s)
+              return s
+          def md(body):
+              out, ul = [], False
+              for ln in body.split("\n"):
+                  ln = ln.rstrip()
+                  if ln.startswith("- "):
+                      if not ul:
+                          out.append("<ul>")
+                          ul = True
+                      out.append("<li>%s</li>" % inline(ln[2:]))
+                      continue
+                  if ul:
+                      out.append("</ul>")
+                      ul = False
+                  if ln.startswith("## "):
+                      out.append("<h2>%s</h2>" % inline(ln[3:]))
+                  elif ln.strip():
+                      out.append("<p>%s</p>" % inline(ln))
+              if ul:
+                  out.append("</ul>")
+              return "\n".join(out)
+          def parse(path):
+              t = open(path, encoding="utf-8").read().replace("\r", "")
+              h, _, body = t.partition("\n---")
+              meta = {}
+              for line in h.splitlines():
+                  for k, key in (("عنوان", "title"), ("خلاصه", "summary"), ("نوع", "type")):
+                      if line.startswith(k + ":"):
+                          meta[key] = line.split(":", 1)[1].strip()
+              return meta, body.strip("-\n ")
+          os.makedirs("posts", exist_ok=True)
+          posts = []
+          for p in sorted(glob.glob("posts/*.md"), reverse=True):
+              name = os.path.basename(p)[:-3]
+              meta, body = parse(p)
+              if not meta.get("title") or not body:
+                  print("skip", p)
+                  continue
+              date = name[:10]
+              url = BASE + "/posts/" + name + ".html"
+              kind = "خبر فاندامنتال" if meta.get("type", "").startswith("خبر") else "تحلیل"
+              ld = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": meta["title"], "datePublished": date, "inLanguage": "fa", "author": {"@type": "Organization", "name": "ایران نرخ"}}, ensure_ascii=False)
+              page = head(meta["title"] + " | ایران نرخ", meta.get("summary", meta["title"]), url)
+              page += '<article><span class="tag">%s</span><h1>%s</h1><p class="meta"><time datetime="%s">%s</time></p>%s<p class="note">%s</p></article><script type="application/ld+json">%s</script>' % (kind, E(meta["title"]), date, date, md(body), DISC, ld)
+              open("posts/" + name + ".html", "w", encoding="utf-8").write(page + TAIL)
+              posts.append((name, date, meta, kind))
+          if posts:
+              cards = ""
+              for name, date, m, kind in posts:
+                  cards += '<a class="card" href="/posts/%s.html"><span class="tag">%s</span><br><b>%s</b><br><span><time datetime="%s">%s</time> — %s</span></a>' % (name, kind, E(m["title"]), date, date, E(m.get("summary", "")))
+              idx = head("تحلیل و اخبار فاندامنتال طلا | ایران نرخ", "تحلیل روزانه طلا و اخبار فاندامنتال بازار به زبان ساده.", BASE + "/analysis.html")
+              idx += '<h1>تحلیل و اخبار فاندامنتال طلا</h1><p class="lead">آخرین تحلیل‌ها و خبرهای مؤثر بر قیمت طلا.</p>' + cards + TAIL
+              open("analysis.html", "w", encoding="utf-8").write(idx)
+              for f in ("index.html", "prices.html", "tools.html"):
+                  if os.path.exists(f):
+                      s = open(f, encoding="utf-8").read()
+                      if "/analysis.html" not in s:
+                          s = s.replace('<a href="/tools.html"', '<a href="/analysis.html">تحلیل‌ها</a><a href="/tools.html"', 1)
+                          open(f, "w", encoding="utf-8").write(s)
+              urls = ["/", "/prices.html", "/tools.html", "/analysis.html"] + ["/posts/%s.html" % x[0] for x in posts]
+              sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+              sm += "".join("  <url><loc>%s%s</loc></url>\n" % (BASE, u) for u in urls) + "</urlset>\n"
+              open("sitemap.xml", "w", encoding="utf-8").write(sm)
+          EOF
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --staged --quiet || (git commit -m "build posts" && git pull --rebase -q && git push)
