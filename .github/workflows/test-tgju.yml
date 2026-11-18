@@ -1,0 +1,11 @@
+name: Test tgju
+on: workflow_dispatch
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for h in call4 call3 call5; do
+            curl -s -o /tmp/o.txt -w "$h status=%{http_code} size=%{size_download}\n" -m 20 -A "Mozilla/5.0" "https://$h.tgju.org/ajax.json"
+            head -c 200 /tmp/o.txt; echo
+          done
