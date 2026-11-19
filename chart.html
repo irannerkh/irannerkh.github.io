@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>نمودار زنده طلا، دلار و تتر | ایران نرخ</title>
+<meta name="description" content="نمودار زنده اونس طلا (XAUUSD)، دلار آزاد و تتر. با دکمه‌ها بین بازارها جابه‌جا شوید.">
+<link rel="canonical" href="https://irannerkh.github.io/chart.html">
+<link rel="preconnect" href="https://s3.tradingview.com">
+<link rel="stylesheet" href="/style.css">
+<style>
+main.wide{max-width:1200px;padding:14px 12px 28px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 10px}
+.bar h1{font-size:1.2rem;margin:0}
+.btn{font:inherit;font-weight:700;background:var(--card);color:var(--gold-soft);border:1px solid var(--gold);border-radius:12px;padding:8px 16px;cursor:pointer;text-decoration:none}
+.btn[aria-pressed=true]{background:var(--gold);color:#0d0d0f}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin:0 0 8px}
+.tabs .btn{white-space:nowrap;flex:0 0 auto}
+.chartbox{height:calc(100dvh - 230px);min-height:420px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);position:relative}
+#view{height:100%;width:100%}
+#view.khsv{overflow:auto;padding:14px}
+#view .tradingview-widget-container,#view .tradingview-widget-container__widget{height:100%;width:100%}
+.chartbox.fs{position:fixed;inset:0;z-index:50;height:100dvh;min-height:0;border-radius:0;border:0}
+.close{display:none;position:absolute;top:calc(env(safe-area-inset-top,0px) + 8px);left:8px;z-index:60}
+.fs .close{display:block}
+body.lock{overflow:hidden}
+.fallback{color:var(--muted);font-size:.9rem;margin-top:12px}
+.khs-widget{margin-bottom:14px}
+</style>
+</head>
+<body>
+<header><strong>ایران نرخ</strong>
+<nav aria-label="منوی اصلی"><a href="/">خانه</a><a href="/prices.html">قیمت‌ها</a><a href="/chart.html" aria-current="page">نمودار</a><a href="/analysis.html">تحلیل‌ها</a><a href="/tools.html">ابزارها</a></nav></header>
+<main class="wide">
+<div class="bar"><h1>نمودار زنده بازارها</h1>
+<button class="btn" id="fsBtn" type="button">تمام‌صفحه</button></div>
+<div class="tabs" id="tabs" role="group" aria-label="انتخاب بازار"></div>
+<div class="tabs" id="ranges" role="group" aria-label="بازه زمانی" hidden></div>
+<div class="chartbox" id="box">
+<button class="btn close" id="closeBtn" type="button">✕ خروج</button>
+<div id="view"></div>
+</div>
+<p class="fallback">نمودار طلای جهانی از <a href="https://www.tradingview.com/symbols/XAUUSD/" rel="noopener" style="color:var(--gold-soft)">TradingView</a> و قیمت و نمودار دلار و تتر از <a href="https://khanesarmaye.com/" rel="noopener" style="color:var(--gold-soft)">خانه سرمایه</a> است. اگر نمودار بارگذاری نشد، فیلترشکن را روشن کنید و دوباره امتحان کنید. برای رسم راحت‌تر روی گوشی از «تمام‌صفحه» و حالت افقی استفاده کنید.</p>
+<p class="note">این صفحه آموزشی و اطلاع‌رسانی است و توصیه‌ی مالی نیست. معامله در بازارهای مالی ریسک دارد. برای حجم معامله از <a href="/tools.html" style="color:var(--gold-soft)">ماشین‌حساب ریسک طلا</a> استفاده کنید.</p>
+</main>
+<script>
+(function(){
+var TABS=[
+  {label:'طلای جهانی',type:'tv'},
+  {label:'دلار آزاد',type:'khs',sym:'usd'},
+  {label:'تتر',type:'khs',sym:'usdt'}
+];
+var RANGES=[['24h','۲۴ ساعت'],['7d','۷ روز'],['30d','۳۰ روز']];
+var box=document.getElementById('box'),view=document.getElementById('view');
+var tabsEl=document.getElementById('tabs'),rangesEl=document.getElementById('ranges');
+var cur=0,range='24h';
+function setFs(on){box.classList.toggle('fs',on);document.body.classList.toggle('lock',on)}
+document.getElementById('fsBtn').onclick=function(){setFs(!box.classList.contains('fs'))};
+document.getElementById('closeBtn').onclick=function(){setFs(false)};
+document.addEventListener('keydown',function(e){if(e.key==='Escape')setFs(false)});
+function mountTV(){
+  view.className='';view.innerHTML='';
+  var c=document.createElement('div');c.className='tradingview-widget-container';
+  c.innerHTML='<div class="tradingview-widget-container__widget"></div>';
+  var s=document.createElement('script');
+  s.src='https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';s.async=true;
+  s.innerHTML=JSON.stringify({autosize:true,symbol:'OANDA:XAUUSD',interval:'60',timezone:'Asia/Tehran',theme:'dark',style:'1',locale:'fa_IR',backgroundColor:'#17171b',allow_symbol_change:true,hide_side_toolbar:false,support_host:'https://www.tradingview.com'});
+  c.appendChild(s);view.appendChild(c);
+}
+function mountKhs(sym){
+  view.className='khsv';
+  var a='<a href="https://khanesarmaye.com/symbol/'+sym+'/" target="_blank" rel="noopener">خانه سرمایه</a>';
+  view.innerHTML='<div class="khs-widget" data-type="card" data-symbol="'+sym+'" data-chart="'+range+'">'+a+'</div><div class="khs-widget" data-type="chart" data-symbol="'+sym+'" data-range="'+range+'">'+a+'</div>';
+  var s=document.createElement('script');s.async=true;s.charset='utf-8';
+  s.src='https://khanesarmaye.com/widgets/v1/embed.js';
+  view.appendChild(s);
+}
+function btn(parent,label,pressed,fn){
+  var b=document.createElement('button');b.type='button';b.className='btn';b.textContent=label;
+  b.setAttribute('aria-pressed',pressed?'true':'false');b.onclick=fn;parent.appendChild(b);
+}
+function render(){
+  tabsEl.innerHTML='';
+  TABS.forEach(function(t,i){btn(tabsEl,t.label,i===cur,function(){cur=i;render()})});
+  var t=TABS[cur];
+  rangesEl.hidden=t.type!=='khs';
+  rangesEl.innerHTML='';
+  if(t.type==='khs')RANGES.forEach(function(r){btn(rangesEl,r[1],r[0]===range,function(){range=r[0];render()})});
+  if(t.type==='tv')mountTV();else mountKhs(t.sym);
+}
+if(document.readyState==='complete')render();else window.addEventListener('load',render);
+})();
+</script>
+</body>
+</html>
