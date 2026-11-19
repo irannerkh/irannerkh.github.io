@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ماشین‌حساب ریسک طلا و سوالات متداول | ایران نرخ</title>
+<meta name="description" content="ماشین‌حساب رایگان حجم معامله طلا (XAUUSD): سرمایه، درصد ریسک و حد ضرر را بزنید و حجم لات را ببینید. به‌همراه پاسخ سوالات متداول درباره طلا و سکه.">
+<link rel="canonical" href="https://irannerkh.github.io/tools.html">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"حجم معامله طلا چطور حساب می‌شود؟","acceptedAnswer":{"@type":"Answer","text":"مقدار ریسک به دلار را بر حاصل‌ضرب فاصله حد ضرر (به دلار) در ۱۰۰ تقسیم می‌کنیم. هر لات استاندارد طلا ۱۰۰ اونس است."}},
+{"@type":"Question","name":"چند درصد از سرمایه را ریسک کنم؟","acceptedAnswer":{"@type":"Answer","text":"بسیاری از معامله‌گران در هر معامله بین ۱ تا ۲ درصد سرمایه را ریسک می‌کنند. این عدد توصیه نیست و به تحمل ریسک شما بستگی دارد."}},
+{"@type":"Question","name":"طلای ۱۸ عیار چیست؟","acceptedAnswer":{"@type":"Answer","text":"طلای ۱۸ عیار یعنی از هر ۲۴ قسمت، ۱۸ قسمت آن طلای خالص است؛ یعنی خلوص ۷۵ درصد."}},
+{"@type":"Question","name":"قیمت طلا و دلار را از کجا ببینم؟","acceptedAnswer":{"@type":"Answer","text":"قیمت‌های لحظه‌ای طلا، نقره، نفت، بیت‌کوین و قیمت‌های داخلی دلار، طلای ۱۸ و سکه در ربات تلگرام ایران نرخ در دسترس است."}}
+]}
+</script>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header><strong>ایران نرخ</strong><nav aria-label="منوی اصلی"><a href="/">خانه</a><a href="/prices.html">قیمت‌ها</a><a href="/chart.html">نمودار</a><a href="/analysis.html">تحلیل‌ها</a><a href="/tools.html" aria-current="page">ابزارها</a></nav></header>
+<main>
+<h1>ماشین‌حساب ریسک طلا</h1>
+<p class="lead">سرمایه، درصد ریسک و فاصله حد ضرر را وارد کنید تا حجم مناسب معامله طلا (XAUUSD) را ببینید.</p>
+
+<section class="calc" aria-label="ماشین‌حساب">
+<label for="bal">سرمایه <span class="hint">(دلار)</span></label>
+<input id="bal" inputmode="decimal" value="1000" autocomplete="off">
+<label for="risk">درصد ریسک <span class="hint">(درصد از سرمایه)</span></label>
+<input id="risk" inputmode="decimal" value="1" autocomplete="off">
+<label for="sl">فاصله حد ضرر <span class="hint">(دلار، مثلاً ۵ یعنی ۵ دلار حرکت قیمت)</span></label>
+<input id="sl" inputmode="decimal" value="5" autocomplete="off">
+<p class="err" id="err" role="alert"></p>
+<div class="result" aria-live="polite">
+<div>حجم پیشنهادی</div>
+<div class="big"><span id="lot">0.02</span> <small>لات</small></div>
+<div class="rows">
+<div>ریسک به دلار<b id="usd">10.00 $</b></div>
+<div>مقدار طلا<b id="oz">2.00 اونس</b></div>
+</div>
+</div>
+</section>
+<p class="note">فرمول: حجم لات = ریسک به دلار ÷ (فاصله حد ضرر × ۱۰۰). هر لات استاندارد طلا ۱۰۰ اونس است؛ اندازه لات در بعضی کارگزاری‌ها فرق دارد.</p>
+
+<h2>سوالات متداول</h2>
+<details><summary>حجم معامله طلا چطور حساب می‌شود؟</summary><p>مقدار ریسک به دلار را بر حاصل‌ضرب فاصله حد ضرر در ۱۰۰ تقسیم می‌کنیم. مثلاً با سرمایه ۱۰۰۰ دلار، ریسک ۱ درصد (۱۰ دلار) و حد ضرر ۵ دلاری، حجم برابر ۰٫۰۲ لات می‌شود.</p></details>
+<details><summary>چند درصد از سرمایه را ریسک کنم؟</summary><p>بسیاری از معامله‌گران در هر معامله ۱ تا ۲ درصد سرمایه را ریسک می‌کنند. این عدد توصیه نیست و به تحمل ریسک خودتان بستگی دارد.</p></details>
+<details><summary>طلای ۱۸ عیار چیست؟</summary><p>یعنی از هر ۲۴ قسمت، ۱۸ قسمت آن طلای خالص است؛ خلوص ۷۵ درصد.</p></details>
+<details><summary>قیمت طلا و دلار را از کجا ببینم؟</summary><p>قیمت لحظه‌ای طلا، نقره، نفت، بیت‌کوین و اتریوم و هم‌چنین قیمت داخلی دلار، طلای ۱۸ و سکه را در ربات تلگرام ایران نرخ ببینید.</p></details>
+
+<h2>ما را دنبال کنید</h2>
+<div class="links">
+<a href="https://t.me/Irannerkhh_bot">ربات تلگرام</a>
+<a href="https://t.me/irannerkhh1">کانال تلگرام</a>
+<a href="https://instagram.com/irannerkhh">اینستاگرام</a>
+</div>
+<p class="note">این صفحه آموزشی است و توصیه مالی نیست. معامله در بازارهای مالی ریسک دارد.</p>
+</main>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+function num(v){
+  var s=String(v).replace(/[۰-۹]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)})
+    .replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)})
+    .replace(/[٫,]/g,'.');
+  return parseFloat(s);
+}
+function calc(){
+  var b=num($('bal').value),r=num($('risk').value),s=num($('sl').value);
+  if(!(b>0)||!(r>0)||!(s>0)){
+    $('err').textContent='هر سه عدد باید بزرگ‌تر از صفر باشند.';
+    return;
+  }
+  if(r>100){$('err').textContent='درصد ریسک نمی‌تواند بیشتر از ۱۰۰ باشد.';return;}
+  $('err').textContent='';
+  var usd=b*r/100,oz=usd/s,lot=oz/100;
+  $('lot').textContent=lot.toFixed(2);
+  $('usd').textContent=usd.toFixed(2)+' $';
+  $('oz').textContent=oz.toFixed(2)+' اونس';
+}
+['bal','risk','sl'].forEach(function(i){$(i).addEventListener('input',calc)});
+calc();
+})();
+</script>
+</body>
+</html>
