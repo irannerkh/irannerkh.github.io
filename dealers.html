@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>نرخ همکاران | قیمت مثقال، خرید و تعویض متفرقه (ویژه طلافروشان) | ایران نرخ</title>
+<meta name="description" content="ویژه طلافروشان و همکاران: قیمت آنلاین گرم طلای ۱۸ عیار، مثقال، خرید متفرقه و تعویض متفرقه که همراه با نوسان بازار خودکار به‌روز می‌شود.">
+<link rel="canonical" href="https://irannerkh.github.io/dealers.html">
+<link rel="stylesheet" href="/style.css">
+<style>
+.live{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:16px;min-height:120px}
+.tbl{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.tbl td{padding:14px;border-bottom:1px solid var(--line)}
+.tbl tr:last-child td{border-bottom:0}
+.tbl .n{color:var(--muted);font-size:.85rem;display:block}
+.tbl .v{font-weight:700;font-size:1.25rem;color:var(--gold);text-align:left;white-space:nowrap}
+.tbl tr.main .v{font-size:1.5rem}
+.stamp{color:var(--muted);font-size:.9rem;margin:10px 0}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.btn{font:inherit;font-weight:700;background:var(--card);color:var(--gold-soft);border:1px solid var(--gold);border-radius:12px;padding:8px 16px;cursor:pointer}
+.set{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.set input{margin-bottom:0}
+details.s{margin-top:18px}
+.warn{color:var(--gold-soft)}
+@media(max-width:420px){.set{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><strong>ایران نرخ</strong>
+<nav aria-label="منوی اصلی"><a href="/">خانه</a><a href="/prices.html">قیمت‌ها</a><a href="/chart.html">نمودار</a><a href="/analysis.html">تحلیل‌ها</a><a href="/dealers.html" aria-current="page">همکاران</a><a href="/tools.html">ابزارها</a></nav></header>
+<main>
+<h1>نرخ همکاران؛ ویژه طلافروشان</h1>
+<p class="lead">قیمت گرم طلای ۱۸ عیار را به‌صورت آنلاین می‌گیرد و مثقال، خرید متفرقه و تعویض متفرقه را همراه با بالا و پایین شدن بازار خودکار حساب می‌کند.</p>
+
+<div class="live" id="live">
+<div class="khs-widget" data-type="card" data-symbol="geram18" data-chart="24h"><a href="https://khanesarmaye.com/symbol/geram18/" target="_blank" rel="noopener">خانه سرمایه</a></div>
+</div>
+
+<table class="tbl" aria-live="polite">
+<tr class="main"><td>گرم طلای ۱۸ عیار<span class="n">قیمت پایه آنلاین</span></td><td class="v" id="r_g">—</td></tr>
+<tr><td>قیمت مثقال طلا<span class="n" id="n_m">گرم × ۴.۶۰</span></td><td class="v" id="r_m">—</td></tr>
+<tr><td>قیمت خرید متفرقه<span class="n" id="n_b">گرم منهای ۲٪</span></td><td class="v" id="r_b">—</td></tr>
+<tr><td>قیمت تعویض متفرقه<span class="n" id="n_e">گرم منهای ۱.۲۶٪</span></td><td class="v" id="r_e">—</td></tr>
+</table>
+<p class="stamp" id="stamp">در حال دریافت قیمت…</p>
+<div class="acts"><button class="btn" id="copy" type="button">کپی نرخ‌ها برای ارسال</button></div>
+
+<details class="s"><summary>تنظیمات و قیمت دستی</summary>
+<p class="hint">اگر قیمت خودکار خوانده نشد یا خواستید ضرایب را عوض کنید، این‌جا تغییر دهید. قیمت دستی را خالی بگذارید تا قیمت آنلاین استفاده شود.</p>
+<label for="man">قیمت دستی گرم ۱۸ عیار <span class="hint">(هم‌واحد با قیمت ویجت)</span></label>
+<input id="man" inputmode="numeric" autocomplete="off" placeholder="خالی = آنلاین">
+<div class="set">
+<div><label for="k_m">ضریب مثقال</label><input id="k_m" inputmode="decimal" value="4.60"></div>
+<div><label for="k_b">کسر خرید (٪)</label><input id="k_b" inputmode="decimal" value="2"></div>
+<div><label for="k_e">کسر تعویض (٪)</label><input id="k_e" inputmode="decimal" value="1.26"></div>
+</div></details>
+
+<p class="note">قیمت پایه از ویجت <a href="https://khanesarmaye.com/symbol/geram18/" rel="noopener" style="color:var(--gold-soft)">خانه سرمایه</a> گرفته می‌شود و بقیه‌ی اعداد بر اساس فرمول بالا محاسبه می‌شوند. این نرخ‌ها راهنما هستند و مسئولیت خرید و فروش با خود شماست.</p>
+</main>
+<script async src="https://khanesarmaye.com/widgets/v1/embed.js" charset="utf-8"></script>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+function digits(s){return String(s).replace(/[۰-۹]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}).replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)})}
+function num(v){var n=parseFloat(digits(v).replace(/[٫]/g,'.').replace(/[,٬،\s]/g,''));return isFinite(n)?n:NaN}
+var fmt=new Intl.NumberFormat('fa-IR',{maximumFractionDigits:0});
+var auto=NaN,lastText='',unit='';
+try{['k_m','k_b','k_e'].forEach(function(k){var v=localStorage.getItem(k);if(v)$(k).value=v})}catch(e){}
+function deepText(root){
+  var t=(root.innerText!==undefined?root.innerText:root.textContent)||'';
+  var all=root.querySelectorAll?root.querySelectorAll('*'):[];
+  for(var i=0;i<all.length;i++){
+    var sr=all[i].shadowRoot;
+    if(sr){
+      t+=' '+deepText(sr)
+    }
+  }
+  return t;
+}
+function readWidget(){
+  var t=deepText($('live'));
+  if(t===lastText)return;lastText=t;
+  unit=/ریال/.test(t)&&!/تومان/.test(t)?' ریال':' تومان';
+  var m=digits(t).match(/\d{1,3}(?:[,٬،]\d{3})+/g),best=NaN;
+  if(m){for(var i=0;i<m.length;i++){var n=num(m[i]);if(n>=100000&&!(n<=best))best=n}}
+  if(best>0)auto=best;
+  calc();
+}
+function calc(){
+  var man=num($('man').value),g=isFinite(man)&&man>0?man:auto;
+  var km=num($('k_m').value),kb=num($('k_b').value),ke=num($('k_e').value);
+  try{localStorage.setItem('k_m',$('k_m').value);localStorage.setItem('k_b',$('k_b').value);localStorage.setItem('k_e',$('k_e').value)}catch(e){}
+  $('n_m').textContent='گرم × '+km;
+  $('n_b').textContent='گرم منهای '+kb+'٪';
+  $('n_e').textContent='گرم منهای '+ke+'٪';
+  if(!(g>0)){['r_g','r_m','r_b','r_e'].forEach(function(i){$(i).textContent='—'});return}
+  var u=isFinite(man)&&man>0?' تومان':unit;
+  $('r_g').textContent=fmt.format(Math.round(g))+u;
+  $('r_m').textContent=fmt.format(Math.round(g*km))+u;
+  $('r_b').textContent=fmt.format(Math.round(g*(1-kb/100)))+u;
+  $('r_e').textContent=fmt.format(Math.round(g*(1-ke/100)))+u;
+  var d=new Date();
+  $('stamp').textContent='آخرین به‌روزرسانی: '+d.toLocaleTimeString('fa-IR',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit',second:'2-digit'})+(isFinite(man)&&man>0?' (قیمت دستی)':'');
+}
+['man','k_m','k_b','k_e'].forEach(function(i){$(i).addEventListener('input',calc)});
+new MutationObserver(readWidget).observe($('live'),{childList:true,subtree:true,characterData:true});
+setInterval(readWidget,3000);
+setTimeout(function(){
+  if(!(auto>0)){var s=$('stamp');s.textContent='قیمت آنلاین خودکار خوانده نشد. قیمت را در بخش «تنظیمات و قیمت دستی» وارد کنید.';s.className='stamp warn'}
+},8000);
+$('copy').onclick=function(){
+  var t='گرم ۱۸ عیار: '+$('r_g').textContent+'\nمثقال: '+$('r_m').textContent+'\nخرید متفرقه: '+$('r_b').textContent+'\nتعویض متفرقه: '+$('r_e').textContent+'\nایران نرخ - irannerkh.github.io';
+  var b=$('copy');
+  function ok(){b.textContent='کپی شد ✓';setTimeout(function(){b.textContent='کپی نرخ‌ها برای ارسال'},1800)}
+  if(navigator.clipboard)navigator.clipboard.writeText(t).then(ok,function(){});else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}a.remove()}
+};
+calc();
+})();
+</script>
+</body>
+</html>
