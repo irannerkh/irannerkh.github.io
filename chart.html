@@ -20,7 +20,7 @@ main.wide{max-width:1200px;padding:14px 12px 28px}
 #view{height:100%;width:100%}
 #view.khsv{overflow:auto;padding:14px}
 #view .tradingview-widget-container,#view .tradingview-widget-container__widget{height:100%;width:100%}
-.chartbox.fs{position:fixed;inset:0;z-index:50;height:100dvh;min-height:0;border-radius:0;border:0}
+.chartbox.fs{position:fixed;inset:0;z-index:300;height:100dvh;min-height:0;border-radius:0;border:0}
 .close{display:none;position:absolute;top:calc(env(safe-area-inset-top,0px) + 8px);left:8px;z-index:60}
 .fs .close{display:block}
 body.lock{overflow:hidden}
@@ -28,8 +28,6 @@ body.lock{overflow:hidden}
 .khs-widget{margin-bottom:14px}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "XAUUSD یعنی چه؟", "acceptedAnswer": {"@type": "Answer", "text": "XAU نماد طلا و USD نماد دلار آمریکاست؛ یعنی قیمت هر اونس طلا به دلار."}}, {"@type": "Question", "name": "کدام تایم‌فریم مناسب است؟", "acceptedAnswer": {"@type": "Answer", "text": "بازه‌های کوتاه (مثل ۱۵ دقیقه یا ۱ ساعت) برای دیدن حرکت‌های روزانه‌اند و بازه‌های بلند (روزانه و هفتگی) روند کلی را نشان می‌دهند. انتخاب به هدف و تحمل ریسک شما بستگی دارد و توصیه‌ی مالی نیست."}}, {"@type": "Question", "name": "نمودار دلار و سکه از کجا می‌آید؟", "acceptedAnswer": {"@type": "Answer", "text": "نمودار طلای جهانی از TradingView و قیمت و نمودار دلار، تتر، طلای ۱۸ و سکه از ویجت خانه سرمایه است."}}]}</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MYPHGXXE44"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MYPHGXXE44');</script>
 </head>
 <body>
 <header><strong>ایران نرخ</strong>
@@ -57,7 +55,8 @@ body.lock{overflow:hidden}
 <script>
 (function(){
 var TABS=[
-  {label:'طلای جهانی',type:'tv'},
+  {label:'طلای جهانی',type:'tv',sym:'OANDA:XAUUSD'},
+  {label:'نقره جهانی',type:'tv',sym:'OANDA:XAGUSD'},
   {label:'دلار آزاد',type:'khs',sym:'usd'},
   {label:'تتر',type:'khs',sym:'usdt'},
   {label:'طلای ۱۸',type:'khs',sym:'geram18'},
@@ -76,13 +75,13 @@ function setFs(on){box.classList.toggle('fs',on);document.body.classList.toggle(
 document.getElementById('fsBtn').onclick=function(){setFs(!box.classList.contains('fs'))};
 document.getElementById('closeBtn').onclick=function(){setFs(false)};
 document.addEventListener('keydown',function(e){if(e.key==='Escape')setFs(false)});
-function mountTV(){
+function mountTV(sym){
   view.className='';view.innerHTML='';
   var c=document.createElement('div');c.className='tradingview-widget-container';
   c.innerHTML='<div class="tradingview-widget-container__widget"></div>';
   var s=document.createElement('script');
   s.src='https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';s.async=true;
-  s.innerHTML=JSON.stringify({autosize:true,symbol:'OANDA:XAUUSD',interval:'60',timezone:'Asia/Tehran',theme:'dark',style:'1',locale:'fa_IR',backgroundColor:'#17171b',allow_symbol_change:true,hide_side_toolbar:false,support_host:'https://www.tradingview.com'});
+  s.innerHTML=JSON.stringify({autosize:true,symbol:sym||'OANDA:XAUUSD',interval:'60',timezone:'Asia/Tehran',theme:'dark',style:'1',locale:'fa_IR',backgroundColor:'#17171b',allow_symbol_change:true,hide_side_toolbar:false,support_host:'https://www.tradingview.com'});
   c.appendChild(s);view.appendChild(c);
 }
 function mountKhs(sym){
@@ -104,7 +103,7 @@ function render(){
   rangesEl.hidden=t.type!=='khs';
   rangesEl.innerHTML='';
   if(t.type==='khs')RANGES.forEach(function(r){btn(rangesEl,r[1],r[0]===range,function(){range=r[0];render()})});
-  if(t.type==='tv')mountTV();else mountKhs(t.sym);
+  if(t.type==='tv')mountTV(t.sym);else mountKhs(t.sym);
 }
 if(document.readyState==='complete')render();else window.addEventListener('load',render);
 })();
