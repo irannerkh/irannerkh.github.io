@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حباب سکه و طلا امروز؛ محاسبه ارزش ذاتی طلای ۱۸، سکه و نقره | ایران نرخ</title>
+<meta name="description" content="ابزار رایگان محاسبه حباب سکه امامی، بهار آزادی، نیم، ربع، گرمی، طلای ۱۸ عیار و نقره. ارزش ذاتی را از قیمت جهانی و دلار آزاد حساب می‌کند و فاصله‌ی آن با قیمت بازار را نشان می‌دهد.">
+<link rel="canonical" href="https://irannerkh.github.io/bubble.html">
+<link rel="stylesheet" href="/style.css">
+<style>
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid2 input{margin-bottom:0}
+.item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.item h3{margin:0 0 8px;font-size:1.05rem;color:var(--gold-soft)}
+.item input{margin-bottom:8px}
+.res{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.95rem}
+.res div{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:6px 10px}
+.res span{display:block;color:var(--muted);font-size:.8rem}
+.res b{direction:ltr;display:block;text-align:right}
+.tag{display:inline-block;margin-top:8px;padding:2px 12px;border-radius:20px;font-size:.85rem;border:1px solid var(--line);color:var(--muted)}
+.pos{color:#ff8a7a;border-color:#ff8a7a}.neg{color:#5fd38d;border-color:#5fd38d}.mid{color:var(--gold-soft);border-color:var(--gold)}
+.auto{font-size:.75rem;color:var(--gold);font-weight:400}
+details.w{margin-top:14px}
+.wg{display:grid;grid-template-columns:1fr;gap:12px;padding-bottom:12px}
+@media(min-width:700px){.wg{grid-template-columns:1fr 1fr}}
+.spec{width:100%;border-collapse:collapse;font-size:.92rem}
+.spec td,.spec th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:right}
+.spec th{color:var(--muted);font-weight:400}
+@media(max-width:420px){.grid2,.res{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><strong>ایران نرخ</strong>
+<nav aria-label="منوی اصلی"><a href="/">خانه</a><a href="/prices.html">قیمت‌ها</a><a href="/chart.html">نمودار</a><a href="/bubble.html" aria-current="page">حباب</a><a href="/analysis.html">تحلیل‌ها</a><a href="/dealers.html">همکاران</a><a href="/tools.html">ابزارها</a></nav></header>
+<main>
+<h1>حباب سکه و طلا امروز</h1>
+<p class="lead">ارزش ذاتی طلای ۱۸ عیار، سکه‌ها و نقره را از روی قیمت جهانی و دلار آزاد حساب می‌کند و فاصله‌ی آن با قیمت بازار را نشان می‌دهد. قیمت‌ها تا جای ممکن خودکار پر می‌شوند و همه را می‌توانید دستی عوض کنید.</p>
+
+<div class="box">
+<div class="grid2">
+<div><label for="oz">اونس طلا <span class="hint">(دلار)</span> <span class="auto" id="a_oz"></span></label><input id="oz" inputmode="decimal" autocomplete="off"></div>
+<div><label for="usd">دلار آزاد <span class="hint">(تومان)</span> <span class="auto" id="a_usd"></span></label><input id="usd" inputmode="numeric" autocomplete="off"></div>
+<div><label for="soz">اونس نقره <span class="hint">(دلار)</span> <span class="auto" id="a_soz"></span></label><input id="soz" inputmode="decimal" autocomplete="off"></div>
+</div>
+<p class="hint" style="margin:10px 0 0">اونس‌های پیش‌فرض از قیمت آتی (futures) گرفته می‌شوند و ممکن است چند درصد با قیمت لحظه‌ای فرق کنند. برای دقت بیشتر، قیمت لحظه‌ای را از صفحه‌ی <a href="/chart.html" style="color:var(--gold-soft)">نمودار</a> وارد کنید.</p>
+</div>
+
+<div id="items"></div>
+<p class="note">ارزش ذاتی = مقدار طلای خالص × (اونس ÷ ۳۱.۱۰۳۵) × دلار. حباب = قیمت بازار منهای ارزش ذاتی. اعداد تقریبی و آموزشی هستند و توصیه‌ی خرید یا فروش نیستند. منبع‌های مختلف ممکن است حباب را کمی متفاوت حساب کنند.</p>
+
+<details class="w" open><summary>قیمت‌های زنده (منبع: خانه سرمایه)</summary>
+<div class="wg" id="wg">
+<div class="khs-widget" data-type="card" data-symbol="usd" data-chart="24h"><a href="https://khanesarmaye.com/symbol/usd/" target="_blank" rel="noopener">خانه سرمایه</a></div>
+<div class="khs-widget" data-type="card" data-symbol="geram18" data-chart="24h"><a href="https://khanesarmaye.com/symbol/geram18/" target="_blank" rel="noopener">خانه سرمایه</a></div>
+<div class="khs-widget" data-type="card" data-symbol="sekee" data-chart="24h"><a href="https://khanesarmaye.com/symbol/sekee/" target="_blank" rel="noopener">خانه سرمایه</a></div>
+<div class="khs-widget" data-type="card" data-symbol="sekeb" data-chart="24h"><a href="https://khanesarmaye.com/symbol/sekeb/" target="_blank" rel="noopener">خانه سرمایه</a></div>
+<div class="khs-widget" data-type="card" data-symbol="nim" data-chart="24h"><a href="https://khanesarmaye.com/symbol/nim/" target="_blank" rel="noopener">خانه سرمایه</a></div>
+<div class="khs-widget" data-type="card" data-symbol="rob" data-chart="24h"><a href="https://khanesarmaye.com/symbol/rob/" target="_blank" rel="noopener">خانه سرمایه</a></div>
+<div class="khs-widget" data-type="card" data-symbol="gerami" data-chart="24h"><a href="https://khanesarmaye.com/symbol/gerami/" target="_blank" rel="noopener">خانه سرمایه</a></div>
+</div></details>
+
+<section class="seo">
+<h2>حباب سکه چیست؟</h2>
+<p>سکه‌های طلا مقدار مشخصی طلای خالص دارند. قیمت آن مقدار طلا (بر اساس اونس جهانی و دلار آزاد) «ارزش ذاتی» سکه است. وقتی قیمت بازار از آن بیشتر باشد، به اختلاف می‌گویند «حباب مثبت» و وقتی کمتر باشد «حباب منفی».</p>
+<h2>طلای خالص هر سکه</h2>
+<table class="spec"><tr><th>سکه</th><th>طلای خالص (گرم)</th></tr>
+<tr><td>سکه امامی و بهار آزادی</td><td>۷.۳۲۰ (وزن ۸.۱۳۳ با عیار ۹۰۰)</td></tr>
+<tr><td>نیم‌سکه</td><td>۳.۶۶۰</td></tr><tr><td>ربع‌سکه</td><td>۱.۸۳۰</td></tr><tr><td>سکه گرمی</td><td>۰.۹۰۰</td></tr></table>
+<h2>سوالات متداول</h2>
+<details><summary>چرا حباب سکه‌های کوچک بیشتر است؟</summary><p>سکه‌های کوچک‌تر هزینه‌ی ضرب و تقاضای خرد بیشتری نسبت به مقدار طلایشان دارند، پس معمولاً حباب درصدی بالاتری دارند.</p></details>
+<details><summary>چرا عدد حباب این‌جا با سایت‌های دیگر فرق دارد؟</summary><p>هر سایت از اونس، دلار و روش محاسبه‌ی متفاوتی استفاده می‌کند. این‌جا همه‌ی ورودی‌ها را می‌بینید و می‌توانید عوض کنید.</p></details>
+<details><summary>حباب منفی یعنی خرید؟</summary><p>نه لزوماً. حباب فقط فاصله با ارزش ذاتی را نشان می‌دهد و روند بازار، هزینه‌ی خرید و فروش و هدف شما را در نظر نمی‌گیرد. این ابزار توصیه‌ی مالی نیست.</p></details>
+</section>
+</main>
+<script async src="https://khanesarmaye.com/widgets/v1/embed.js" charset="utf-8"></script>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+function digits(s){return String(s).replace(/[۰-۹]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}).replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)})}
+function num(v){var n=parseFloat(digits(v).replace(/[٫]/g,'.').replace(/[,٬،\s]/g,''));return isFinite(n)?n:NaN}
+var fmt=new Intl.NumberFormat('fa-IR',{maximumFractionDigits:0}),pct=new Intl.NumberFormat('fa-IR',{maximumFractionDigits:1});
+var ITEMS=[
+ {k:'g18',n:'طلای ۱۸ عیار (هر گرم)',sym:'geram18',g:0.75},
+ {k:'emami',n:'سکه امامی',sym:'sekee',g:7.3197},
+ {k:'bahar',n:'سکه بهار آزادی',sym:'sekeb',g:7.3197},
+ {k:'nim',n:'نیم‌سکه',sym:'nim',g:3.65985},
+ {k:'rob',n:'ربع‌سکه',sym:'rob',g:1.829925},
+ {k:'gerami',n:'سکه گرمی',sym:'gerami',g:0.9},
+ {k:'silver',n:'نقره ۹۹۹ (هر گرم)',sym:null,s:0.999}
+];
+var dirty={};
+var box=$('items');
+ITEMS.forEach(function(it){
+  var d=document.createElement('div');d.className='item';
+  d.innerHTML='<h3>'+it.n+'</h3><label for="p_'+it.k+'">قیمت بازار <span class="hint">(تومان)</span> <span class="auto" id="a_'+it.k+'"></span></label><input id="p_'+it.k+'" inputmode="numeric" autocomplete="off" placeholder="'+(it.sym?'خودکار یا دستی':'دستی')+'"><div class="res"><div><span>ارزش ذاتی</span><b id="i_'+it.k+'">—</b></div><div><span>حباب</span><b id="b_'+it.k+'">—</b></div></div><div class="tag" id="t_'+it.k+'">منتظر ورودی</div>';
+  box.appendChild(d);
+  $('p_'+it.k).addEventListener('input',function(){dirty[it.k]=true;$('a_'+it.k).textContent='';calc()});
+});
+['oz','usd','soz'].forEach(function(i){$(i).addEventListener('input',function(){dirty[i]=true;$('a_'+i).textContent='';calc()})});
+function calc(){
+  var oz=num($('oz').value),usd=num($('usd').value),soz=num($('soz').value);
+  var g24=oz/31.1035*usd,s1=soz/31.1035*usd;
+  ITEMS.forEach(function(it){
+    var p=num($('p_'+it.k).value),iv=it.g!==undefined?g24*it.g:s1*it.s;
+    var i=$('i_'+it.k),b=$('b_'+it.k),t=$('t_'+it.k);
+    if(!(iv>0)){i.textContent='—';b.textContent='—';t.textContent='ورودی‌ها را کامل کنید';t.className='tag';return}
+    i.textContent=fmt.format(Math.round(iv));
+    if(!(p>0)){b.textContent='—';t.textContent='قیمت بازار را وارد کنید';t.className='tag';return}
+    var diff=p-iv,pc=diff/iv*100;
+    b.textContent=(diff>0?'+':'')+fmt.format(Math.round(diff))+' ('+(pc>0?'+':'')+pct.format(pc)+'٪)';
+    if(pc>1){t.textContent='حباب مثبت؛ گران‌تر از ارزش ذاتی';t.className='tag pos'}
+    else if(pc<-1){t.textContent='حباب منفی؛ ارزان‌تر از ارزش ذاتی';t.className='tag neg'}
+    else{t.textContent='نزدیک به ارزش ذاتی';t.className='tag mid'}
+  });
+}
+function deepText(root){
+  var t=(root.innerText!==undefined?root.innerText:root.textContent)||'';
+  var all=root.querySelectorAll?root.querySelectorAll('*'):[];
+  for(var i=0;i<all.length;i++){if(all[i].shadowRoot)t+=' '+deepText(all[i].shadowRoot)}
+  return t;
+}
+function widgetPrice(sym){
+  var el=document.querySelector('.khs-widget[data-symbol="'+sym+'"]');if(!el)return NaN;
+  var m=digits(deepText(el)).match(/\d{1,3}(?:[,٬،]\d{3})+/g),best=NaN;
+  if(m)m.forEach(function(x){var n=num(x);if(n>=100000&&!(n<=best))best=n});
+  return best;
+}
+function setAuto(key,inputId,val,label){
+  if(dirty[key]||!(val>0))return;
+  var el=$(inputId);var s=String(Math.round(val*100)/100);
+  if(el.value!==s){el.value=s}
+  $('a_'+key).textContent=label;
+}
+function poll(){
+  var u=widgetPrice('usd');setAuto('usd','usd',u,'(خودکار)');
+  ITEMS.forEach(function(it){if(it.sym)setAuto(it.k,'p_'+it.k,widgetPrice(it.sym),'(خودکار)')});
+  calc();
+}
+fetch('prices.json?t='+Date.now()).then(function(r){return r.json()}).then(function(d){
+  var g=d.items&&d.items.gold,s=d.items&&d.items.silver;
+  if(g)setAuto('oz','oz',g.price,'(آتی)');
+  if(s)setAuto('soz','soz',s.price,'(آتی)');
+  calc();
+}).catch(function(){});
+setInterval(poll,3000);setTimeout(poll,1500);calc();
+})();
+</script>
+</body>
+</html>
