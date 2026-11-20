@@ -1,0 +1,37 @@
+name: Add analytics
+on:
+  push:
+    paths:
+      - "**.html"
+  workflow_run:
+    workflows: ["Build posts"]
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: stats
+jobs:
+  inject:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inject tag
+        run: |
+          python3 - <<'EOF'
+          import glob
+          TAG = """<script async src="https://www.googletagmanager.com/gtag/js?id=G-MYPHGXXE44"></script>
+          <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MYPHGXXE44');</script>
+          """
+          for f in glob.glob("**/*.html", recursive=True):
+              s = open(f, encoding="utf-8").read()
+              if "G-MYPHGXXE44" in s or "</head>" not in s:
+                  continue
+              open(f, "w", encoding="utf-8").write(s.replace("</head>", TAG + "</head>", 1))
+          EOF
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --staged --quiet || (git commit -m "add analytics" && git pull --rebase -q && git push)
