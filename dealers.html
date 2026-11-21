@@ -25,8 +25,6 @@ details.s{margin-top:18px}
 @media(max-width:420px){.set{grid-template-columns:1fr}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "قیمت‌های این صفحه چقدر آنلاین است؟", "acceptedAnswer": {"@type": "Answer", "text": "قیمت پایه‌ی گرم ۱۸ عیار از ویجت زنده‌ی خانه سرمایه خوانده می‌شود و با هر تغییر، مثقال و خرید و تعویض متفرقه دوباره حساب می‌شوند."}}, {"@type": "Question", "name": "اگر قیمت خودکار خوانده نشد چه کنم؟", "acceptedAnswer": {"@type": "Answer", "text": "در بخش «تنظیمات و قیمت دستی» قیمت گرم ۱۸ عیار را وارد کنید تا بقیه‌ی نرخ‌ها از روی آن حساب شوند."}}, {"@type": "Question", "name": "می‌توانم درصدها را عوض کنم؟", "acceptedAnswer": {"@type": "Answer", "text": "بله. ضریب مثقال و درصد کسر خرید و تعویض در بخش تنظیمات قابل تغییر است و در گوشی شما ذخیره می‌شود."}}]}</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MYPHGXXE44"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MYPHGXXE44');</script>
 </head>
 <body>
 <header><strong>ایران نرخ</strong>
@@ -58,7 +56,7 @@ details.s{margin-top:18px}
 <div><label for="k_e">کسر تعویض (٪)</label><input id="k_e" inputmode="decimal" value="1.26"></div>
 </div></details>
 
-<p class="note">قیمت پایه از ویجت <a href="https://khanesarmaye.com/symbol/geram18/" rel="noopener" style="color:var(--gold-soft)">خانه سرمایه</a> گرفته می‌شود و بقیه‌ی اعداد بر اساس فرمول بالا محاسبه می‌شوند. این نرخ‌ها راهنما هستند و مسئولیت خرید و فروش با خود شماست.</p>
+<p class="note">قیمت پایه از نرخ <a href="https://www.estjt.ir/" rel="noopener" style="color:var(--gold-soft)">اتحادیه طلا و جواهر تهران</a> گرفته می‌شود (و اگر در دسترس نبود، از ویجت خانه سرمایه) و بقیه‌ی اعداد بر اساس فرمول بالا محاسبه می‌شوند. این نرخ‌ها راهنما هستند و مسئولیت خرید و فروش با خود شماست.</p>
 <section class="seo"><h2>مثقال، خرید و تعویض متفرقه چطور حساب می‌شود؟</h2>
 <p>یک مثقال طلا حدود ۴.۶۰۸ گرم است. در این صفحه برای ساده‌تر شدن حساب، قیمت مثقال از ضرب قیمت گرم ۱۸ عیار در ضریب ۴.۶۰ به دست می‌آید و ضریب در بخش تنظیمات قابل تغییر است.</p>
 <p>خرید متفرقه معمولاً قیمتی است که طلافروش برای خرید طلای دست‌دوم یا متفرقه از مشتری می‌دهد و تعویض متفرقه قیمتی است که هنگام عوض کردن طلای قدیمی با طلای نو حساب می‌شود. این صفحه آن‌ها را به‌ترتیب ۲٪ و ۱.۲۶٪ کمتر از قیمت گرم ۱۸ عیار محاسبه می‌کند. این درصدها روش رایج برخی همکاران است و صنف و شهر شما ممکن است فرق داشته باشد، پس در تنظیمات قابل تغییرند.</p>
@@ -69,13 +67,14 @@ details.s{margin-top:18px}
 </section>
 </main>
 <script async src="https://khanesarmaye.com/widgets/v1/embed.js" charset="utf-8"></script>
+<script src="/union.js"></script>
 <script>
 (function(){
 var $=function(i){return document.getElementById(i)};
 function digits(s){return String(s).replace(/[۰-۹]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}).replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)})}
 function num(v){var n=parseFloat(digits(v).replace(/[٫]/g,'.').replace(/[,٬،\s]/g,''));return isFinite(n)?n:NaN}
 var fmt=new Intl.NumberFormat('fa-IR',{maximumFractionDigits:0});
-var auto=NaN,lastText='',unit='';
+var auto=NaN,lastText='',unit='',uni=NaN;
 try{['k_m','k_b','k_e'].forEach(function(k){var v=localStorage.getItem(k);if(v)$(k).value=v})}catch(e){}
 function deepText(root){
   var t=(root.innerText!==undefined?root.innerText:root.textContent)||'';
@@ -98,26 +97,26 @@ function readWidget(){
   calc();
 }
 function calc(){
-  var man=num($('man').value),g=isFinite(man)&&man>0?man:auto;
+  var man=num($('man').value),g=isFinite(man)&&man>0?man:(uni>0?uni:auto);
   var km=num($('k_m').value),kb=num($('k_b').value),ke=num($('k_e').value);
   try{localStorage.setItem('k_m',$('k_m').value);localStorage.setItem('k_b',$('k_b').value);localStorage.setItem('k_e',$('k_e').value)}catch(e){}
   $('n_m').textContent='گرم × '+km;
   $('n_b').textContent='گرم منهای '+kb+'٪';
   $('n_e').textContent='گرم منهای '+ke+'٪';
   if(!(g>0)){['r_g','r_m','r_b','r_e'].forEach(function(i){$(i).textContent='—'});return}
-  var u=isFinite(man)&&man>0?' تومان':unit;
+  var u=(isFinite(man)&&man>0)||uni>0?' تومان':unit;
   $('r_g').textContent=fmt.format(Math.round(g))+u;
   $('r_m').textContent=fmt.format(Math.round(g*km))+u;
   $('r_b').textContent=fmt.format(Math.round(g*(1-kb/100)))+u;
   $('r_e').textContent=fmt.format(Math.round(g*(1-ke/100)))+u;
   var d=new Date();
-  $('stamp').textContent='آخرین به‌روزرسانی: '+d.toLocaleTimeString('fa-IR',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit',second:'2-digit'})+(isFinite(man)&&man>0?' (قیمت دستی)':'');
+  $('stamp').textContent='آخرین به‌روزرسانی: '+d.toLocaleTimeString('fa-IR',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit',second:'2-digit'})+(isFinite(man)&&man>0?' (قیمت دستی)':(uni>0?' — منبع: اتحادیه طلا و جواهر تهران':' — منبع: خانه سرمایه'));
 }
 ['man','k_m','k_b','k_e'].forEach(function(i){$(i).addEventListener('input',calc)});
 new MutationObserver(readWidget).observe($('live'),{childList:true,subtree:true,characterData:true});
 setInterval(readWidget,3000);
 setTimeout(function(){
-  if(!(auto>0)){var s=$('stamp');s.textContent='قیمت آنلاین خودکار خوانده نشد. قیمت را در بخش «تنظیمات و قیمت دستی» وارد کنید.';s.className='stamp warn'}
+  if(!(auto>0)&&!(uni>0)){var s=$('stamp');s.textContent='قیمت آنلاین خودکار خوانده نشد. قیمت را در بخش «تنظیمات و قیمت دستی» وارد کنید.';s.className='stamp warn'}
 },8000);
 $('copy').onclick=function(){
   var t='گرم ۱۸ عیار: '+$('r_g').textContent+'\nمثقال: '+$('r_m').textContent+'\nخرید متفرقه: '+$('r_b').textContent+'\nتعویض متفرقه: '+$('r_e').textContent+'\nایران نرخ - irannerkh.github.io';
@@ -125,6 +124,8 @@ $('copy').onclick=function(){
   function ok(){b.textContent='کپی شد ✓';setTimeout(function(){b.textContent='کپی نرخ‌ها برای ارسال'},1800)}
   if(navigator.clipboard)navigator.clipboard.writeText(t).then(ok,function(){});else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}a.remove()}
 };
+function loadU(){if(window.IxUnion)IxUnion(function(d){uni=d?d.items.gold18:NaN;calc()})}
+loadU();setInterval(loadU,180000);
 calc();
 })();
 </script>

@@ -29,15 +29,13 @@ details.w{margin-top:14px}
 .spec th{color:var(--muted);font-weight:400}
 @media(max-width:420px){.grid2,.res{grid-template-columns:1fr}}
 </style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MYPHGXXE44"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MYPHGXXE44');</script>
 </head>
 <body>
 <header><strong>ایران نرخ</strong>
 <nav aria-label="منوی اصلی"><a href="/">خانه</a><a href="/prices.html">قیمت‌ها</a><a href="/chart.html">نمودار</a><a href="/bubble.html" aria-current="page">حباب</a><a href="/analysis.html">تحلیل‌ها</a><a href="/dealers.html">همکاران</a><a href="/tools.html">ابزارها</a></nav></header>
 <main>
 <h1>حباب سکه و طلا امروز</h1>
-<p class="lead">ارزش ذاتی طلای ۱۸ عیار، سکه‌ها و نقره را از روی قیمت جهانی و دلار آزاد حساب می‌کند و فاصله‌ی آن با قیمت بازار را نشان می‌دهد. قیمت‌ها تا جای ممکن خودکار پر می‌شوند و همه را می‌توانید دستی عوض کنید.</p>
+<p class="lead">ارزش ذاتی طلای ۱۸ عیار، سکه‌ها و نقره را از روی قیمت جهانی و دلار آزاد حساب می‌کند و فاصله‌ی آن با قیمت بازار را نشان می‌دهد. قیمت طلا و سکه‌ها از نرخ اتحادیه طلا و جواهر تهران (و در صورت قطع بودن، از ویجت خانه سرمایه) خودکار پر می‌شوند و همه را می‌توانید دستی عوض کنید.</p>
 
 <div class="box">
 <div class="grid2">
@@ -76,6 +74,7 @@ details.w{margin-top:14px}
 </section>
 </main>
 <script async src="https://khanesarmaye.com/widgets/v1/embed.js" charset="utf-8"></script>
+<script src="/union.js"></script>
 <script>
 (function(){
 var $=function(i){return document.getElementById(i)};
@@ -134,11 +133,20 @@ function setAuto(key,inputId,val,label){
   if(el.value!==s){el.value=s}
   $('a_'+key).textContent=label;
 }
+var U=null;
+var MAP={g18:'gold18',emami:'coin_new',bahar:'coin_old',nim:'nim',rob:'rob',gerami:'gerami'};
+function applyU(){
+  if(!U)return;
+  Object.keys(MAP).forEach(function(k){var v=U.items[MAP[k]];if(v>0&&!dirty[k]){$('p_'+k).value=String(v);$('a_'+k).textContent='(اتحادیه)'}});
+}
 function poll(){
   var u=widgetPrice('usd');setAuto('usd','usd',u,'(خودکار)');
   ITEMS.forEach(function(it){if(it.sym)setAuto(it.k,'p_'+it.k,widgetPrice(it.sym),'(خودکار)')});
+  applyU();
   calc();
 }
+function loadU(){if(window.IxUnion)IxUnion(function(d){U=d;applyU();calc()})}
+loadU();setInterval(loadU,180000);
 fetch('prices.json?t='+Date.now()).then(function(r){return r.json()}).then(function(d){
   var g=d.items&&d.items.gold,s=d.items&&d.items.silver;
   if(g)setAuto('oz','oz',g.price,'(آتی)');
