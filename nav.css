@@ -1,0 +1,29 @@
+/* ایران نرخ - ناوبری مشترک (هدر، منوی کشویی، نوار پایین موبایل) */
+body{font-family:Vazirmatn,Tahoma,"Segoe UI",system-ui,sans-serif}
+.ix-hd{position:sticky;top:0;z-index:100;background:rgba(11,11,14,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:1px solid #26262f}
+.ix-in{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:8px 14px;padding-top:calc(8px + env(safe-area-inset-top,0px))}
+.ix-logo{display:flex;align-items:center;gap:8px;color:#D9B43B;font-weight:700;font-size:1.25rem;text-decoration:none;white-space:nowrap}
+.ix-logo svg{width:28px;height:28px}
+.ix-nav{display:none;flex:1;justify-content:center;gap:4px}
+.ix-nav a{color:#A5A5AF;text-decoration:none;font-weight:700;padding:8px 12px;border-radius:10px;white-space:nowrap;font-size:.95rem}
+.ix-nav a:hover{color:#F5F5F5}
+.ix-nav a[aria-current=page]{color:#F2D675;background:#1C1C24}
+.ix-act{margin-inline-start:auto;display:flex;align-items:center;gap:6px}
+.ix-ic{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;color:#F2D675;background:none;border:0;border-radius:10px;cursor:pointer;text-decoration:none}
+.ix-ic:hover{background:#1C1C24}
+.ix-ic svg,.ix-bn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ix-soc{display:none}
+.ix-ov{position:fixed;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:opacity .2s;z-index:200}
+.ix-dr{position:fixed;top:0;bottom:0;left:0;width:min(300px,82vw);background:#15151B;border-right:1px solid #26262f;transform:translateX(-100%);transition:transform .22s;z-index:210;padding:16px;padding-top:calc(16px + env(safe-area-inset-top,0px));overflow-y:auto;visibility:hidden}
+.ix-open .ix-ov{opacity:1;pointer-events:auto}
+.ix-open .ix-dr{transform:none;visibility:visible}
+.ix-dr h2{font-size:.85rem;color:#A5A5AF;font-weight:400;margin:18px 0 6px}
+.ix-dr a{display:block;color:#F5F5F5;text-decoration:none;padding:11px 12px;border-radius:10px;font-weight:700}
+.ix-dr a[aria-current=page]{color:#F2D675;background:#1C1C24}
+.ix-dr a:hover{background:#1C1C24}
+.ix-bnav{position:fixed;bottom:0;left:0;right:0;z-index:100;display:flex;background:rgba(21,21,27,.97);border-top:1px solid #26262f;padding-bottom:env(safe-area-inset-bottom,0px)}
+.ix-bn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0 6px;color:#A5A5AF;text-decoration:none;font:inherit;font-size:.72rem;background:none;border:0;cursor:pointer}
+.ix-bn[aria-current=page]{color:#F2D675}
+body.ix-pad{padding-bottom:calc(66px + env(safe-area-inset-bottom,0px))}
+body.ix-lock{overflow:hidden}
+@media(min-width:900px){.ix-nav{display:flex}.ix-bnav,#ixMenu{display:none}.ix-soc{display:inline-flex}body.ix-pad{padding-bottom:0}}

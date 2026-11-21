@@ -24,19 +24,19 @@ a{color:inherit}
 a:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .tk{display:flex;gap:10px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
 .tk::-webkit-scrollbar{display:none}
-.pc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;min-width:150px;flex:1 0 150px}
+.pc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 12px;min-width:150px;flex:1 0 150px}
 .pc .n{color:var(--muted);font-size:.82rem}
 .pc .p{font-weight:700;font-size:1.15rem;direction:ltr;text-align:right;line-height:1.5}
 .pc .u{font-size:.7rem;color:var(--muted);font-weight:400}
 .ch{font-size:.85rem;direction:ltr;text-align:right}
 .up{color:var(--up)}.down{color:var(--down)}.na{color:var(--muted)}
 .hero{position:relative;display:flex;align-items:center;min-height:230px;background:radial-gradient(circle at 15% 50%,#3a2b0a,#0B0B0E 70%);border:1px solid var(--line);border-radius:18px;margin:6px 0 4px;overflow:hidden}
-.hero .hi{position:absolute;left:0;top:0;height:100%;width:auto;max-width:none}
+.hero .hi{position:absolute;left:0;top:0;height:100%;width:auto;max-width:none;-webkit-mask-image:linear-gradient(to right,#000 55%,transparent 100%);mask-image:linear-gradient(to right,#000 55%,transparent 100%)}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to left,rgba(11,11,14,.94) 0%,rgba(11,11,14,.78) 42%,rgba(11,11,14,0) 78%)}
-.ht{position:relative;z-index:2;padding:20px 18px;max-width:62%}
+.ht{position:relative;z-index:2;padding:20px 16px;max-width:70%}
 .hero h1{font-size:2.1rem;color:var(--g2);line-height:1.4}
 .hero p{margin:2px 0;color:var(--muted)}
-.hero .lead{color:var(--text);font-size:1.1rem;font-weight:700}
+.hero .lead{color:var(--text);font-size:1rem;font-weight:700}
 .cta{display:inline-block;margin-top:10px;background:var(--gold);color:#0B0B0E;font-weight:700;text-decoration:none;padding:10px 20px;border-radius:12px}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .tools{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
@@ -55,17 +55,15 @@ a:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offs
 details>summary{cursor:pointer;font-weight:700;color:var(--g2)}
 footer{color:var(--muted);font-size:.82rem;text-align:center;margin-top:26px}
 footer a{color:var(--gold);text-decoration:none;margin:0 6px}
-@media(min-width:700px){.hero{min-height:270px}.ht{padding:28px 34px;max-width:55%}.grid{grid-template-columns:repeat(4,1fr)}.tools{grid-template-columns:repeat(5,1fr)}.news{grid-template-columns:repeat(3,1fr)}.wg{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:700px){.hero{min-height:270px}.hero .lead{font-size:1.2rem}.ht{padding:28px 34px;max-width:55%}.grid{grid-template-columns:repeat(4,1fr)}.tools{grid-template-columns:repeat(5,1fr)}.news{grid-template-columns:repeat(3,1fr)}.wg{grid-template-columns:repeat(4,1fr)}}
 </style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MYPHGXXE44"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MYPHGXXE44');</script>
 </head>
 <body>
 <main class="w">
 <section aria-label="نرخ‌های لحظه‌ای"><div class="tk" id="tk"></div></section>
 
 <section class="hero" aria-label="معرفی">
-<img class="hi" src="/img/hero-gold.webp" width="746" height="418" alt="شمش و سکه طلا" fetchpriority="high" decoding="async">
+<img class="hi" src="/hero-gold.webp" width="746" height="418" alt="شمش و سکه طلا" fetchpriority="high" decoding="async">
 <div class="ht"><h1>ایران نرخ</h1><p class="lead">مرجع لحظه‌ای بازار طلا و ارز</p><p>دقیق، سریع، حرفه‌ای</p><a class="cta" href="/chart.html">مشاهده نمودارها ←</a></div>
 </section>
 
