@@ -25,8 +25,6 @@ details.s{margin-top:18px}
 @media(max-width:420px){.set{grid-template-columns:1fr}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "قیمت‌های این صفحه چقدر آنلاین است؟", "acceptedAnswer": {"@type": "Answer", "text": "قیمت پایه‌ی گرم ۱۸ عیار از ویجت زنده‌ی خانه سرمایه خوانده می‌شود و با هر تغییر، مثقال و خرید و تعویض متفرقه دوباره حساب می‌شوند."}}, {"@type": "Question", "name": "اگر قیمت خودکار خوانده نشد چه کنم؟", "acceptedAnswer": {"@type": "Answer", "text": "در بخش «تنظیمات و قیمت دستی» قیمت گرم ۱۸ عیار را وارد کنید تا بقیه‌ی نرخ‌ها از روی آن حساب شوند."}}, {"@type": "Question", "name": "می‌توانم درصدها را عوض کنم؟", "acceptedAnswer": {"@type": "Answer", "text": "بله. ضریب مثقال و درصد کسر خرید و تعویض در بخش تنظیمات قابل تغییر است و در گوشی شما ذخیره می‌شود."}}]}</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MYPHGXXE44"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MYPHGXXE44');</script>
 </head>
 <body>
 <header><strong>ایران نرخ</strong>
@@ -76,7 +74,7 @@ var $=function(i){return document.getElementById(i)};
 function digits(s){return String(s).replace(/[۰-۹]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}).replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)})}
 function num(v){var n=parseFloat(digits(v).replace(/[٫]/g,'.').replace(/[,٬،\s]/g,''));return isFinite(n)?n:NaN}
 var fmt=new Intl.NumberFormat('fa-IR',{maximumFractionDigits:0});
-var auto=NaN,lastText='',unit='',uni=NaN;
+var auto=NaN,lastText='',unit='',uni=NaN,uniT='';
 try{['k_m','k_b','k_e'].forEach(function(k){var v=localStorage.getItem(k);if(v)$(k).value=v})}catch(e){}
 function deepText(root){
   var t=(root.innerText!==undefined?root.innerText:root.textContent)||'';
@@ -112,7 +110,7 @@ function calc(){
   $('r_b').textContent=fmt.format(Math.round(g*(1-kb/100)))+u;
   $('r_e').textContent=fmt.format(Math.round(g*(1-ke/100)))+u;
   var d=new Date();
-  $('stamp').textContent='آخرین به‌روزرسانی: '+d.toLocaleTimeString('fa-IR',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit',second:'2-digit'})+(isFinite(man)&&man>0?' (قیمت دستی)':(uni>0?' — منبع: اتحادیه طلا و جواهر تهران':' — منبع: خانه سرمایه'));
+  $('stamp').textContent='آخرین به‌روزرسانی: '+d.toLocaleTimeString('fa-IR',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit',second:'2-digit'})+(isFinite(man)&&man>0?' (قیمت دستی)':(uni>0?' — منبع: اتحادیه طلا و جواهر تهران'+(uniT?' (آخرین نرخ اتحادیه: '+uniT+')':''):' — منبع: خانه سرمایه'));
 }
 ['man','k_m','k_b','k_e'].forEach(function(i){$(i).addEventListener('input',calc)});
 new MutationObserver(readWidget).observe($('live'),{childList:true,subtree:true,characterData:true});
@@ -126,8 +124,8 @@ $('copy').onclick=function(){
   function ok(){b.textContent='کپی شد ✓';setTimeout(function(){b.textContent='کپی نرخ‌ها برای ارسال'},1800)}
   if(navigator.clipboard)navigator.clipboard.writeText(t).then(ok,function(){});else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}a.remove()}
 };
-function loadU(){if(window.IxUnion)IxUnion(function(d){uni=d?d.items.gold18:NaN;calc()})}
-loadU();setInterval(loadU,180000);
+function loadU(){if(window.IxUnion)IxUnion(function(d){uni=d?d.items.gold18:NaN;uniT=d&&d.updated_fa?d.updated_fa:'';calc()})}
+loadU();setInterval(loadU,60000);
 calc();
 })();
 </script>

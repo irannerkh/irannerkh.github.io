@@ -57,8 +57,6 @@ footer{color:var(--muted);font-size:.82rem;text-align:center;margin-top:26px}
 footer a{color:var(--gold);text-decoration:none;margin:0 6px}
 @media(min-width:700px){.hero{min-height:270px}.hero .lead{font-size:1.2rem}.ht{padding:28px 34px;max-width:55%}.grid{grid-template-columns:repeat(4,1fr)}.tools{grid-template-columns:repeat(5,1fr)}.news{grid-template-columns:repeat(3,1fr)}.wg{grid-template-columns:repeat(4,1fr)}}
 </style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MYPHGXXE44"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MYPHGXXE44');</script>
 </head>
 <body>
 <main class="w">
@@ -72,6 +70,10 @@ footer a{color:var(--gold);text-decoration:none;margin:0 6px}
 <h2>بازار در یک نگاه</h2>
 <section class="grid" id="ov" aria-label="خلاصه بازار"></section>
 <p class="src" id="src">در حال دریافت قیمت‌ها…</p>
+
+<h2>نرخ اتحادیه طلا و جواهر تهران</h2>
+<section class="grid" id="un" aria-label="نرخ اتحادیه"></section>
+<p class="src" id="usrc">در حال دریافت نرخ اتحادیه…</p>
 
 <h2>نمودار زنده <a href="/chart.html">مشاهده همه ←</a></h2>
 <div class="box"><p style="margin:0 0 10px">نمودار طلای جهانی و نقره با TradingView، و نمودار دلار، تتر، طلای ۱۸ و سکه‌ها با تایم‌فریم و حالت تمام‌صفحه.</p><a class="cta" href="/chart.html" style="margin:0">باز کردن نمودار</a></div>
@@ -132,7 +134,7 @@ function show(host,i,d,usd){
 }
 function render(){
   Object.keys(ROWS).forEach(function(k){ROWS[k].forEach(function(r,i){
-    if(r[1]==='w'){var d=wd(r[2]);if(U){var uv=r[2]==='geram18'?U.items.gold18:(r[2]==='sekee'?U.items.coin_new:0);if(uv>0)d={p:uv,c:d?d.c:NaN}}show(k,i,d,false)}else show(k,i,G[r[2]],true);
+    if(r[1]==='w'){var d=wd(r[2]);if(U){var uv=r[2]==='geram18'?U.items.gold18:(r[2]==='sekee'?U.items.coin_new:0);if(uv>0){var uk=r[2]==='geram18'?'gold18':'coin_new',uc=U.changes&&U.changes[uk];d={p:uv,c:(typeof uc==='number')?uc:(d?d.c:NaN)}}}show(k,i,d,false)}else show(k,i,G[r[2]],true);
   })});
 }
 function loadG(){
@@ -144,7 +146,17 @@ function loadG(){
   }).catch(function(){$('src').textContent='منبع: خانه سرمایه. قیمت جهانی در دسترس نیست.'});
 }
 loadG();setInterval(loadG,300000);
-function loadU(){if(window.IxUnion)IxUnion(function(d){U=d;render()})}
+var UN=[['gold18','طلای ۱۸ عیار'],['gold24','طلای ۲۴ عیار'],['mazaneh','مظنه تهران'],['coin_new','سکه امامی (طرح جدید)'],['coin_old','سکه طرح قدیم'],['nim','نیم‌سکه'],['rob','ربع‌سکه'],['gerami','سکه گرمی']];
+function renderU(){
+  if(!U){$('un').innerHTML='';$('usrc').textContent='نرخ اتحادیه در حال حاضر در دسترس نیست. قیمت‌های بالا از خانه سرمایه می‌آیند.';return}
+  var o='';
+  UN.forEach(function(r){var p=U.items[r[0]];if(!(p>0))return;var c=U.changes&&U.changes[r[0]],cl='<div class="ch na">&nbsp;</div>';
+    if(typeof c==='number')cl='<div class="ch '+(c>=0?'up':'down')+'">'+(c>=0?'▲ +':'▼ ')+f2.format(Math.abs(c))+'%</div>';
+    o+='<div class="pc"><div class="n">'+r[1]+'</div><div class="p">'+f0.format(p)+' <span class="u">تومان</span></div>'+cl+'</div>'});
+  $('un').innerHTML=o;
+  $('usrc').textContent='منبع: اتحادیه طلا و جواهر تهران'+(U.updated_fa?' — آخرین نرخ اتحادیه: '+U.updated_fa:'')+'. درصد تغییر نسبت به میانگین روز قبل است.';
+}
+function loadU(){if(window.IxUnion)IxUnion(function(d){U=d;renderU();render()})}
 loadU();setInterval(loadU,180000);setInterval(render,3000);setTimeout(render,1200);
 function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
 fetch('analysis.html').then(function(r){return r.text()}).then(function(h){
