@@ -23,6 +23,7 @@ main.wide{max-width:1200px;padding:14px 12px 28px}
 #view .tradingview-widget-container,#view .tradingview-widget-container__widget{height:100%;width:100%}
 .info{position:absolute;top:8px;right:12px;z-index:5;font-size:.85rem;color:var(--muted);pointer-events:none;text-shadow:0 0 4px #15151B}
 .info b{color:var(--text);font-size:1rem;direction:ltr;display:inline-block}
+.info2{margin:0 0 8px;color:var(--muted);font-size:.9rem}.info2 b{color:var(--text);font-size:1.05rem;direction:ltr;display:inline-block}
 .msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:var(--muted)}
 .chartbox.fs{position:fixed;inset:0;z-index:300;height:100dvh;min-height:0;border-radius:0;border:0}
 .close{display:none;position:absolute;top:calc(env(safe-area-inset-top,0px) + 8px);left:8px;z-index:310}
@@ -30,8 +31,6 @@ main.wide{max-width:1200px;padding:14px 12px 28px}
 body.lock{overflow:hidden}
 .fallback{color:var(--muted);font-size:.9rem;margin-top:12px}
 </style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MYPHGXXE44"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MYPHGXXE44');</script>
 </head>
 <body>
 <header><strong>ایران نرخ</strong>
@@ -41,6 +40,7 @@ body.lock{overflow:hidden}
 <button class="btn" id="fsBtn" type="button">تمام‌صفحه</button></div>
 <div class="tabs" id="tabs" role="group" aria-label="انتخاب بازار"></div>
 <div class="tabs" id="tfs" role="group" aria-label="تایم‌فریم" hidden></div>
+<p class="info2" id="info2" hidden></p>
 <div class="chartbox" id="box">
 <button class="btn close" id="closeBtn" type="button">✕ خروج</button>
 <div id="view"></div>
@@ -111,11 +111,13 @@ function loadData(cb){
 }
 var fmt=new Intl.NumberFormat('fa-IR',{maximumFractionDigits:0});
 function mountOwn(t){
-  clearView();msg('در حال بارگذاری نمودار…');
+  clearView();msg('در حال بارگذاری نمودار…');document.getElementById('info2').hidden=true;
   loadData(function(){loadLib(function(){
+    var d=DATA&&DATA[t.key],has=d&&((d['5']||[]).length||(d['60']||[]).length||(d['D']||[]).length);
     var rows=rowsFor(t.key,tf);
     clearView();
-    if(!rows.length){msg('هنوز داده‌ی کافی برای این تایم‌فریم جمع نشده است. بعد از چند ساعت دوباره سر بزنید.');return}
+    if(!has){msg('داده‌ی این بازار هنوز دریافت نشده است (منبع: '+t.src+'). کمی بعد دوباره سر بزنید.');return}
+    if(!rows.length){msg('برای این تایم‌فریم هنوز شمعی ساخته نشده است. تایم‌فریم کوچک‌تر را امتحان کنید.');return}
     var el=document.createElement('div');el.style.cssText='position:absolute;inset:0';view.appendChild(el);
     chart=LightweightCharts.createChart(el,{width:el.clientWidth,height:el.clientHeight,
       layout:{background:{color:'#15151B'},textColor:'#A5A5AF',fontFamily:'Vazirmatn,Tahoma,sans-serif'},
@@ -126,10 +128,9 @@ function mountOwn(t){
     series.setData(rows.map(function(r){return {time:r[0]+OFF,open:r[1],high:r[2],low:r[3],close:r[4]}}));
     chart.timeScale().fitContent();
     var last=rows[rows.length-1],first=rows[0],ch=(last[4]/first[1]-1)*100;
-    var info=document.createElement('div');info.className='info';
     var upd='';try{upd=' — به‌روزرسانی: '+new Date(DATA.updated).toLocaleTimeString('fa-IR',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit'})}catch(e){}
-    info.innerHTML=t.label+' (تومان) · <b>'+fmt.format(last[4])+'</b> · منبع: '+t.src+upd;
-    view.appendChild(info);
+    var i2=document.getElementById('info2');i2.hidden=false;
+    i2.innerHTML=t.label+' (تومان) · <b>'+fmt.format(last[4])+'</b> · منبع: '+t.src+upd+(rows.length<5?' — فقط '+fmt.format(rows.length)+' شمع ثبت شده؛ با گذر زمان نمودار کامل‌تر می‌شود.':'');
     ro=new ResizeObserver(function(){if(chart)chart.applyOptions({width:el.clientWidth,height:el.clientHeight})});ro.observe(el);
   })});
 }
@@ -140,7 +141,7 @@ function btn(parent,label,pressed,fn){
 function render(){
   tabsEl.innerHTML='';
   TABS.forEach(function(t,i){btn(tabsEl,t.label,i===cur,function(){cur=i;render()})});
-  var t=TABS[cur];tfsEl.hidden=t.type!=='own';tfsEl.innerHTML='';
+  var t=TABS[cur];tfsEl.hidden=t.type!=='own';tfsEl.innerHTML='';if(t.type!=='own')document.getElementById('info2').hidden=true;
   if(t.type==='own')TFS.forEach(function(x){btn(tfsEl,x[1],x[0]===tf,function(){tf=x[0];render()})});
   if(t.type==='tv')mountTV(t.sym);else mountOwn(t);
 }
