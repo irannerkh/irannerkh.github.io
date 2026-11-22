@@ -29,20 +29,18 @@ details.w{margin-top:14px}
 .spec th{color:var(--muted);font-weight:400}
 @media(max-width:420px){.grid2,.res{grid-template-columns:1fr}}
 </style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MYPHGXXE44"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MYPHGXXE44');</script>
 </head>
 <body>
 <header><strong>ایران نرخ</strong>
 <nav aria-label="منوی اصلی"><a href="/">خانه</a><a href="/prices.html">قیمت‌ها</a><a href="/chart.html">نمودار</a><a href="/bubble.html" aria-current="page">حباب</a><a href="/analysis.html">تحلیل‌ها</a><a href="/dealers.html">همکاران</a><a href="/tools.html">ابزارها</a></nav></header>
 <main>
 <h1>حباب سکه و طلا امروز</h1>
-<p class="lead">ارزش ذاتی طلای ۱۸ عیار، سکه‌ها و نقره را از روی قیمت جهانی و دلار آزاد حساب می‌کند و فاصله‌ی آن با قیمت بازار را نشان می‌دهد. قیمت طلا و سکه‌ها از نرخ اتحادیه طلا و جواهر تهران (و در صورت قطع بودن، از ویجت خانه سرمایه) خودکار پر می‌شوند و همه را می‌توانید دستی عوض کنید.</p>
+<p class="lead">ارزش ذاتی طلای ۱۸ عیار، سکه‌ها و نقره را از روی قیمت جهانی و دلار آزاد حساب می‌کند و فاصله‌ی آن با قیمت بازار را نشان می‌دهد. قیمت طلا و سکه‌ها از نرخ اتحادیه طلا و جواهر تهران و نرخ دلار از قیمت تتر در نوبیتکس خودکار پر می‌شوند و همه را می‌توانید دستی عوض کنید.</p>
 
 <div class="box">
 <div class="grid2">
 <div><label for="oz">اونس طلا <span class="hint">(دلار)</span> <span class="auto" id="a_oz"></span></label><input id="oz" inputmode="decimal" autocomplete="off"></div>
-<div><label for="usd">دلار آزاد <span class="hint">(تومان)</span> <span class="auto" id="a_usd"></span></label><input id="usd" inputmode="numeric" autocomplete="off"></div>
+<div><label for="usd">دلار <span class="hint">(تومان؛ پیش‌فرض: قیمت تتر در نوبیتکس)</span> <span class="auto" id="a_usd"></span></label><input id="usd" inputmode="numeric" autocomplete="off"></div>
 <div><label for="soz">اونس نقره <span class="hint">(دلار)</span> <span class="auto" id="a_soz"></span></label><input id="soz" inputmode="decimal" autocomplete="off"></div>
 </div>
 <p class="hint" style="margin:10px 0 0">اونس‌های پیش‌فرض از قیمت آتی (futures) گرفته می‌شوند و ممکن است چند درصد با قیمت لحظه‌ای فرق کنند. برای دقت بیشتر، قیمت لحظه‌ای را از صفحه‌ی <a href="/chart.html" style="color:var(--gold-soft)">نمودار</a> وارد کنید.</p>
@@ -52,16 +50,7 @@ details.w{margin-top:14px}
 <div id="items"></div>
 <p class="note">ارزش ذاتی = مقدار طلای خالص × (اونس ÷ ۳۱.۱۰۳۵) × دلار. حباب = قیمت بازار منهای ارزش ذاتی. اعداد تقریبی و آموزشی هستند و توصیه‌ی خرید یا فروش نیستند. منبع‌های مختلف ممکن است حباب را کمی متفاوت حساب کنند.</p>
 
-<details class="w" open><summary>قیمت‌های زنده (منبع: خانه سرمایه)</summary>
-<div class="wg" id="wg">
-<div class="khs-widget" data-type="card" data-symbol="usd" data-chart="24h"><a href="https://khanesarmaye.com/symbol/usd/" target="_blank" rel="noopener">خانه سرمایه</a></div>
-<div class="khs-widget" data-type="card" data-symbol="geram18" data-chart="24h"><a href="https://khanesarmaye.com/symbol/geram18/" target="_blank" rel="noopener">خانه سرمایه</a></div>
-<div class="khs-widget" data-type="card" data-symbol="sekee" data-chart="24h"><a href="https://khanesarmaye.com/symbol/sekee/" target="_blank" rel="noopener">خانه سرمایه</a></div>
-<div class="khs-widget" data-type="card" data-symbol="sekeb" data-chart="24h"><a href="https://khanesarmaye.com/symbol/sekeb/" target="_blank" rel="noopener">خانه سرمایه</a></div>
-<div class="khs-widget" data-type="card" data-symbol="nim" data-chart="24h"><a href="https://khanesarmaye.com/symbol/nim/" target="_blank" rel="noopener">خانه سرمایه</a></div>
-<div class="khs-widget" data-type="card" data-symbol="rob" data-chart="24h"><a href="https://khanesarmaye.com/symbol/rob/" target="_blank" rel="noopener">خانه سرمایه</a></div>
-<div class="khs-widget" data-type="card" data-symbol="gerami" data-chart="24h"><a href="https://khanesarmaye.com/symbol/gerami/" target="_blank" rel="noopener">خانه سرمایه</a></div>
-</div></details>
+
 
 <section class="seo">
 <h2>حباب سکه چیست؟</h2>
@@ -76,7 +65,6 @@ details.w{margin-top:14px}
 <details><summary>حباب منفی یعنی خرید؟</summary><p>نه لزوماً. حباب فقط فاصله با ارزش ذاتی را نشان می‌دهد و روند بازار، هزینه‌ی خرید و فروش و هدف شما را در نظر نمی‌گیرد. این ابزار توصیه‌ی مالی نیست.</p></details>
 </section>
 </main>
-<script async src="https://khanesarmaye.com/widgets/v1/embed.js" charset="utf-8"></script>
 <script src="/union.js"></script>
 <script>
 (function(){
@@ -118,18 +106,6 @@ function calc(){
     else{t.textContent='نزدیک به ارزش ذاتی';t.className='tag mid'}
   });
 }
-function deepText(root){
-  var t=(root.innerText!==undefined?root.innerText:root.textContent)||'';
-  var all=root.querySelectorAll?root.querySelectorAll('*'):[];
-  for(var i=0;i<all.length;i++){if(all[i].shadowRoot)t+=' '+deepText(all[i].shadowRoot)}
-  return t;
-}
-function widgetPrice(sym){
-  var el=document.querySelector('.khs-widget[data-symbol="'+sym+'"]');if(!el)return NaN;
-  var m=digits(deepText(el)).match(/\d{1,3}(?:[,٬،]\d{3})+/g),best=NaN;
-  if(m)m.forEach(function(x){var n=num(x);if(n>=100000&&!(n<=best))best=n});
-  return best;
-}
 function setAuto(key,inputId,val,label){
   if(dirty[key]||!(val>0))return;
   var el=$(inputId);var s=String(Math.round(val*100)/100);
@@ -140,15 +116,11 @@ var U=null;
 var MAP={g18:'gold18',emami:'coin_new',bahar:'coin_old',nim:'nim',rob:'rob',gerami:'gerami'};
 function applyU(){
   if(!U)return;
+  if(U.tether&&U.tether.price>0)setAuto('usd','usd',U.tether.price,'(تتر نوبیتکس)');
   Object.keys(MAP).forEach(function(k){var v=U.items[MAP[k]];if(v>0&&!dirty[k]){$('p_'+k).value=String(v);$('a_'+k).textContent='(اتحادیه)'}});
 }
-function poll(){
-  var u=widgetPrice('usd');setAuto('usd','usd',u,'(خودکار)');
-  ITEMS.forEach(function(it){if(it.sym)setAuto(it.k,'p_'+it.k,widgetPrice(it.sym),'(خودکار)')});
-  applyU();
-  calc();
-}
-function loadU(){if(window.IxUnion)IxUnion(function(d){U=d;applyU();$('utime').textContent=d?'قیمت طلا و سکه‌ها از اتحادیه طلا و جواهر تهران'+(d.updated_fa?' — آخرین نرخ اتحادیه: '+d.updated_fa:''):'نرخ اتحادیه در دسترس نیست؛ قیمت‌ها از خانه سرمایه یا دستی هستند.';calc()})}
+function poll(){applyU();calc()}
+function loadU(){if(window.IxUnion)IxUnion(function(d){U=d;applyU();$('utime').textContent=d?'قیمت طلا و سکه‌ها از اتحادیه طلا و جواهر تهران'+(d.updated_fa?' — آخرین نرخ اتحادیه: '+d.updated_fa:''):'نرخ اتحادیه در دسترس نیست؛ قیمت‌ها را دستی وارد کنید.';calc()})}
 loadU();setInterval(loadU,60000);
 fetch('prices.json?t='+Date.now()).then(function(r){return r.json()}).then(function(d){
   var g=d.items&&d.items.gold,s=d.items&&d.items.silver;
