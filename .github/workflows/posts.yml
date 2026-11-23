@@ -1,3 +1,4 @@
+
 name: Build posts
 on:
   push:
@@ -88,7 +89,7 @@ jobs:
               idx = head("تحلیل و اخبار فاندامنتال طلا | ایران نرخ", "تحلیل روزانه طلا و اخبار فاندامنتال بازار به زبان ساده.", BASE + "/analysis.html")
               idx += '<h1>تحلیل و اخبار فاندامنتال طلا</h1><p class="lead">آخرین تحلیل‌ها و خبرهای مؤثر بر قیمت طلا.</p>' + cards + TAIL
               open("analysis.html", "w", encoding="utf-8").write(idx)
-              urls = ["/", "/prices.html", "/chart.html", "/analysis.html", "/dealers.html", "/tools.html"] + ["/posts/%s.html" % x[0] for x in posts]
+              urls = ["/", "/prices.html", "/chart.html", "/analysis.html", "/dealers.html", "/tools.html", "/bubble.html", "/gold-calculator.html"] + ["/posts/%s.html" % x[0] for x in posts]
               sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
               sm += "".join("  <url><loc>%s%s</loc></url>\n" % (BASE, u) for u in urls) + "</urlset>\n"
               open("sitemap.xml", "w", encoding="utf-8").write(sm)
