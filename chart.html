@@ -31,8 +31,11 @@ main.wide{max-width:1200px;padding:14px 12px 28px}
 body.lock{overflow:hidden}
 .fallback{color:var(--muted);font-size:.9rem;margin-top:12px}
 </style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MYPHGXXE44"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MYPHGXXE44');</script>
+<meta property="og:type" content="website"><meta property="og:locale" content="fa_IR"><meta property="og:site_name" content="ایران نرخ">
+<meta property="og:title" content="نمودار زنده طلا، نقره، طلای ۱۸ عیار و تتر | ایران نرخ"><meta property="og:description" content="نمودار شمعی زنده‌ی اونس طلا (XAUUSD)، نقره، طلای ۱۸ عیار (نرخ اتحادیه) و تتر. با دکمه‌ها بین بازارها و تایم‌فریم‌ها جابه‌جا شوید."><meta property="og:url" content="https://irannerkh.github.io/chart.html">
+<meta property="og:image" content="https://irannerkh.github.io/og-image.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://irannerkh.github.io/og-image.jpg">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "خانه", "item": "https://irannerkh.github.io/"}, {"@type": "ListItem", "position": 2, "name": "نمودارها", "item": "https://irannerkh.github.io/chart.html"}]}</script>
 </head>
 <body>
 <header><strong>ایران نرخ</strong>
@@ -132,7 +135,8 @@ function mountOwn(t){
     var last=rows[rows.length-1],first=rows[0],ch=(last[4]/first[1]-1)*100;
     var upd='';try{upd=' — به‌روزرسانی: '+new Date(DATA.updated).toLocaleTimeString('fa-IR',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit'})}catch(e){}
     var i2=document.getElementById('info2');i2.hidden=false;
-    i2.innerHTML=t.label+' (تومان) · <b>'+fmt.format(last[4])+'</b> · منبع: '+t.src+upd+(rows.length<5?' — فقط '+fmt.format(rows.length)+' شمع ثبت شده؛ با گذر زمان نمودار کامل‌تر می‌شود.':'');
+    var stale=false;try{stale=(Date.now()-new Date(DATA.updated).getTime())>7200000}catch(e){}
+    i2.innerHTML=(stale?'<b style="color:#F05B65">⚠ داده‌ی نمودار قدیمی است؛ به‌روزرسانی متوقف شده.</b><br>':'')+t.label+' (تومان) · <b>'+fmt.format(last[4])+'</b> · منبع: '+t.src+upd+(rows.length<5?' — فقط '+fmt.format(rows.length)+' شمع ثبت شده؛ با گذر زمان نمودار کامل‌تر می‌شود.':'');
     ro=new ResizeObserver(function(){if(chart)chart.applyOptions({width:el.clientWidth,height:el.clientHeight})});ro.observe(el);
   })});
 }
