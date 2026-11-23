@@ -1,0 +1,77 @@
+diff --git a/.github/workflows/posts.yml b/.github/workflows/posts.yml
+index 871d76f..44e7202 100644
+--- a/.github/workflows/posts.yml
++++ b/.github/workflows/posts.yml
+@@ -88,7 +88,7 @@ jobs:
+               idx = head("تحلیل و اخبار فاندامنتال طلا | ایران نرخ", "تحلیل روزانه طلا و اخبار فاندامنتال بازار به زبان ساده.", BASE + "/analysis.html")
+               idx += '<h1>تحلیل و اخبار فاندامنتال طلا</h1><p class="lead">آخرین تحلیل‌ها و خبرهای مؤثر بر قیمت طلا.</p>' + cards + TAIL
+               open("analysis.html", "w", encoding="utf-8").write(idx)
+-              urls = ["/", "/prices.html", "/chart.html", "/analysis.html", "/dealers.html", "/tools.html"] + ["/posts/%s.html" % x[0] for x in posts]
++              urls = ["/", "/prices.html", "/chart.html", "/analysis.html", "/dealers.html", "/tools.html", "/bubble.html", "/gold-calculator.html"] +["/posts/%s.html" % x[0] for x in posts]
+               sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+               sm += "".join("  <url><loc>%s%s</loc></url>\n" % (BASE, u) for u in urls) + "</urlset>\n"
+               open("sitemap.xml", "w", encoding="utf-8").write(sm)
+diff --git a/index.html b/index.html
+index c140cd3..9403ab1 100644
+--- a/index.html
++++ b/index.html
+@@ -55,7 +55,7 @@ a:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offs
+ details>summary{cursor:pointer;font-weight:700;color:var(--g2)}
+ footer{color:var(--muted);font-size:.82rem;text-align:center;margin-top:26px}
+ footer a{color:var(--gold);text-decoration:none;margin:0 6px}
+-@media(min-width:700px){.hero{min-height:270px}.hero .lead{font-size:1.2rem}.ht{padding:28px 34px;max-width:55%}.grid{grid-template-columns:repeat(4,1fr)}.tools{grid-template-columns:repeat(5,1fr)}.news{grid-template-columns:repeat(3,1fr)}.wg{grid-template-columns:repeat(4,1fr)}}
++@media(min-width:700px){.hero{min-height:270px}.hero .lead{font-size:1.2rem}.ht{padding:28px 34px;max-width:55%}.grid{grid-template-columns:repeat(4,1fr)}.tools{grid-template-columns:repeat(3,1fr)}.news{grid-template-columns:repeat(3,1fr)}.wg{grid-template-columns:repeat(4,1fr)}}
+ </style>
+ <meta property="og:image" content="https://irannerkh.github.io/og-image.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+ <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://irannerkh.github.io/og-image.jpg">
+@@ -88,6 +88,7 @@ footer a{color:var(--gold);text-decoration:none;margin:0 6px}
+ <a class="tl" href="/dealers.html"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 7h14M5 7l-2 6a3 3 0 0 0 4 0zM19 7l-2 6a3 3 0 0 0 4 0z"/></svg><b>قیمت مثقال و گرم</b><small>ویژه همکاران</small></a>
+ <a class="tl" href="/dealers.html"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg><b>خرید و تعویض متفرقه</b><small>نرخ لحظه‌ای</small></a>
+ <a class="tl" href="/tools.html"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M12 12h2M8 16h2M12 16h2"/></svg><b>حجم معامله</b><small>ماشین‌حساب ریسک</small></a>
++<a class="tl" href="/gold-calculator.html"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h8M8 16h8"/></svg><b>خرید و فروش طلا</b><small>اجرت، سود و مالیات</small></a>
+ <span class="tl off"><svg viewBox="0 0 24 24"><path d="M4 18l5-6 4 3 7-9"/></svg><b>سود و زیان</b><small>به‌زودی</small></span>
+ </section>
+ 
+diff --git a/nav.js b/nav.js
+index 6886354..c8d49d8 100644
+--- a/nav.js
++++ b/nav.js
+@@ -1,7 +1,7 @@
+ (function(){
+ if(window.__ix)return;window.__ix=1;
+ var L=[['/','خانه'],['/prices.html','قیمت‌ها'],['/chart.html','نمودارها'],['/analysis.html','تحلیل و اخبار'],['/dealers.html','همکاران'],['/tools.html','ابزارها']];
+-var X=[['/bubble.html','حباب سکه و طلا'],['https://t.me/Irannerkhh_bot','ربات تلگرام'],['https://t.me/irannerkhh1','کانال تلگرام'],['https://www.instagram.com/irannerkhh/','اینستاگرام']];
++var X=[['/bubble.html','حباب سکه و طلا'],['/gold-calculator.html','ماشین‌حساب خرید و فروش طلا'],['https://t.me/Irannerkhh_bot','ربات تلگرام'],['https://t.me/irannerkhh1','کانال تلگرام'],['https://www.instagram.com/irannerkhh/','اینستاگرام']];
+ var p=location.pathname.replace(/index\.html$/,'');
+ function on(h){if(h==='/')return p==='/'||p==='';if(h==='/analysis.html')return p.indexOf('/analysis')===0||p.indexOf('/posts/')===0;return p.indexOf(h.replace('.html',''))===0}
+ var I={home:'<path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/>',tools:'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/>',news:'<path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/>',menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',tg:'<path d="M21 4L3 11l6 2 2 6 3-4 5 3z"/>',ig:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/>'};
+diff --git a/sitemap.xml b/sitemap.xml
+index a3517ad..7730cb3 100644
+--- a/sitemap.xml
++++ b/sitemap.xml
+@@ -7,6 +7,7 @@
+   <url><loc>https://irannerkh.github.io/analysis.html</loc></url>
+   <url><loc>https://irannerkh.github.io/dealers.html</loc></url>
+   <url><loc>https://irannerkh.github.io/tools.html</loc></url>
++  <url><loc>https://irannerkh.github.io/gold-calculator.html</loc></url>
+   <url><loc>https://irannerkh.github.io/posts/2026-11-18-gold-price-factors.html</loc></url>
+   <url><loc>https://irannerkh.github.io/posts/2026-11-19-gold-daily.html</loc></url>
+   <url><loc>https://irannerkh.github.io/posts/2026-11-20-economist-world-ahead-2027.html</loc></url>
+diff --git a/tools.html b/tools.html
+index c8b9959..560ded4 100644
+--- a/tools.html
++++ b/tools.html
+@@ -55,6 +55,13 @@
+ <details><summary>طلای ۱۸ عیار چیست؟</summary><p>یعنی از هر ۲۴ قسمت، ۱۸ قسمت آن طلای خالص است؛ خلوص ۷۵ درصد.</p></details>
+ <details><summary>قیمت طلا و دلار را از کجا ببینم؟</summary><p>قیمت لحظه‌ای طلا، نقره، نفت، بیت‌کوین و اتریوم و هم‌چنین قیمت داخلی دلار، طلای ۱۸ و سکه را در ربات تلگرام ایران نرخ ببینید.</p></details>
+ 
++<h2>ابزارهای دیگر</h2>
++<div class="links">
++<a href="/gold-calculator.html">ماشین‌حساب خرید و فروش طلا</a>
++<a href="/bubble.html">حباب سکه و طلا</a>
++<a href="/dealers.html">نرخ همکاران</a>
++</div>
++
+ <h2>ما را دنبال کنید</h2>
+ <div class="links">
+ <a href="https://t.me/Irannerkhh_bot">ربات تلگرام</a>
