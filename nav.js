@@ -1,6 +1,6 @@
 (function(){
 if(window.__ix)return;window.__ix=1;
-var L=[['/','خانه'],['/prices.html','قیمت‌ها'],['/chart.html','نمودارها'],['/analysis.html','تحلیل و اخبار'],['/dealers.html','همکاران'],['/tools.html','ابزارها']];
+var L=[['/','خانه'],['/prices.html','قیمت‌ها'],['/crypto.html','ارز دیجیتال'],['/chart.html','نمودارها'],['/analysis.html','تحلیل و اخبار'],['/dealers.html','همکاران'],['/tools.html','ابزارها']];
 var X=[['/bubble.html','حباب سکه و طلا'],['/gold-calculator.html','ماشین‌حساب خرید و فروش طلا'],['/forex.html','فارکس: ریسک و سود و زیان'],['https://t.me/Irannerkhh_bot','ربات تلگرام'],['https://t.me/irannerkhh1','کانال تلگرام'],['https://www.instagram.com/irannerkhh/','اینستاگرام']];
 var p=location.pathname.replace(/index\.html$/,'');
 function on(h){if(h==='/')return p==='/'||p==='';if(h==='/analysis.html')return p.indexOf('/analysis')===0||p.indexOf('/posts/')===0;return p.indexOf(h.replace('.html',''))===0}
@@ -27,4 +27,3 @@ ov.onclick=function(){set(false)};d.addEventListener('click',function(e){if(e.ta
 document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
 if(!document.getElementById('ixFont')){var f=document.createElement('link');f.id='ixFont';f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap';document.head.appendChild(f)}
 })();
-<a href="/crypto.html">ارز دیجیتال</a>
