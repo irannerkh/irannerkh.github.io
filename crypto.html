@@ -22,8 +22,8 @@
 .tbl td.n{direction:ltr;text-align:left;white-space:nowrap}
 .tbl tr{cursor:pointer}
 .tbl tr.on{background:rgba(212,175,55,.08)}
-.ic{width:24px;height:24px;border-radius:50%;vertical-align:middle;margin-left:8px;background:var(--line);object-fit:cover}
-.ic0{display:inline-block}
+.ic{position:relative;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;margin-left:8px;vertical-align:middle;overflow:hidden;color:#fff;font-size:.7rem;font-weight:700;line-height:1;font-family:sans-serif}
+.ic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff;border-radius:50%}
 .sym{color:var(--muted);font-size:.8rem;margin-right:6px}
 .wrap{overflow-x:auto}
 #status{margin:0 0 10px}
@@ -150,10 +150,15 @@ if(ok){
 }
 
 /* ---------- data ---------- */
-function icon(u){return /^https:\/\//.test(u||'')?'<img class="ic" src="'+u+'" alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility=\'hidden\'">':'<span class="ic ic0"></span>'}
+function icon(k,u){
+  var sy=(INFO[k]&&INFO[k].s)||k,h=0,i;for(i=0;i<sy.length;i++)h=(h*31+sy.charCodeAt(i))%360;
+  var p1='https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/32/color/'+encodeURIComponent(k.toLowerCase())+'.png';
+  var f=/^https:\/\//.test(u||'')?u:'';
+  return '<span class="ic" style="background:hsl('+h+',55%,42%)">'+sy.charAt(0)+'<img src="'+p1+'" data-f="'+f+'" alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer" onerror="var f=this.dataset.f;if(f){this.dataset.f=\'\';this.src=f}else{this.remove()}"></span>';
+}
 function show(){
   var co=INFO[cur],d=data[cur];
-  $('sName').innerHTML=icon(d&&d.img)+co.n+' ('+co.s+')';
+  $('sName').innerHTML=icon(cur,d&&d.img)+co.n+' ('+co.s+')';
   if(!d){$('sToman').textContent='—';$('sUsd').textContent='';$('sChg').textContent='';return}
   $('sToman').textContent=d.toman?fa.format(d.toman)+' تومان':'—';
   $('sUsd').textContent=d.usd?'$'+faUsd(d.usd):'';
@@ -173,7 +178,7 @@ function rows(){
   shown.forEach(function(k){
     var d=data[k],tr=document.createElement('tr'),ci=COINS.findIndex(function(c){return c.k===k});
     if(k===cur)tr.className='on';
-    tr.innerHTML='<td>'+icon(d&&d.img)+INFO[k].n+'<span class="sym">'+INFO[k].s+'</span></td><td class="n">'+(d&&d.toman?fa.format(d.toman):'—')+'</td><td class="n hide">'+(d&&d.usd?'$'+faUsd(d.usd):'—')+'</td><td class="n">'+(d?chg(d.ch):'—')+'</td><td><a class="trade" href="'+REF+'" target="_blank" rel="sponsored noopener">خرید</a></td>';
+    tr.innerHTML='<td>'+icon(k,d&&d.img)+INFO[k].n+'<span class="sym">'+INFO[k].s+'</span></td><td class="n">'+(d&&d.toman?fa.format(d.toman):'—')+'</td><td class="n hide">'+(d&&d.usd?'$'+faUsd(d.usd):'—')+'</td><td class="n">'+(d?chg(d.ch):'—')+'</td><td><a class="trade" href="'+REF+'" target="_blank" rel="sponsored noopener">خرید</a></td>';
     tr.querySelector('.trade').addEventListener('click',function(e){e.stopPropagation();if(window.gtag)gtag('event','referral_click',{coin:k})});
     tr.addEventListener('click',function(){
       if(ci>-1)pick(ci,true);else{cur=k;userTouched=Date.now();show();rows();scrollTo({top:stage.offsetTop-60,behavior:'smooth'})}
