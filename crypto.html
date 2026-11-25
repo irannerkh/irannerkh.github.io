@@ -22,6 +22,8 @@
 .tbl td.n{direction:ltr;text-align:left;white-space:nowrap}
 .tbl tr{cursor:pointer}
 .tbl tr.on{background:rgba(212,175,55,.08)}
+.ic{width:24px;height:24px;border-radius:50%;vertical-align:middle;margin-left:8px;background:var(--line);object-fit:cover}
+.ic0{display:inline-block}
 .sym{color:var(--muted);font-size:.8rem;margin-right:6px}
 .wrap{overflow-x:auto}
 #status{margin:0 0 10px}
@@ -148,9 +150,10 @@ if(ok){
 }
 
 /* ---------- data ---------- */
+function icon(u){return /^https:\/\//.test(u||'')?'<img class="ic" src="'+u+'" alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility=\'hidden\'">':'<span class="ic ic0"></span>'}
 function show(){
   var co=INFO[cur],d=data[cur];
-  $('sName').textContent=co.n+' ('+co.s+')';
+  $('sName').innerHTML=icon(d&&d.img)+co.n+' ('+co.s+')';
   if(!d){$('sToman').textContent='—';$('sUsd').textContent='';$('sChg').textContent='';return}
   $('sToman').textContent=d.toman?fa.format(d.toman)+' تومان':'—';
   $('sUsd').textContent=d.usd?'$'+faUsd(d.usd):'';
@@ -170,7 +173,7 @@ function rows(){
   shown.forEach(function(k){
     var d=data[k],tr=document.createElement('tr'),ci=COINS.findIndex(function(c){return c.k===k});
     if(k===cur)tr.className='on';
-    tr.innerHTML='<td>'+INFO[k].n+'<span class="sym">'+INFO[k].s+'</span></td><td class="n">'+(d&&d.toman?fa.format(d.toman):'—')+'</td><td class="n hide">'+(d&&d.usd?'$'+faUsd(d.usd):'—')+'</td><td class="n">'+(d?chg(d.ch):'—')+'</td><td><a class="trade" href="'+REF+'" target="_blank" rel="sponsored noopener">خرید</a></td>';
+    tr.innerHTML='<td>'+icon(d&&d.img)+INFO[k].n+'<span class="sym">'+INFO[k].s+'</span></td><td class="n">'+(d&&d.toman?fa.format(d.toman):'—')+'</td><td class="n hide">'+(d&&d.usd?'$'+faUsd(d.usd):'—')+'</td><td class="n">'+(d?chg(d.ch):'—')+'</td><td><a class="trade" href="'+REF+'" target="_blank" rel="sponsored noopener">خرید</a></td>';
     tr.querySelector('.trade').addEventListener('click',function(e){e.stopPropagation();if(window.gtag)gtag('event','referral_click',{coin:k})});
     tr.addEventListener('click',function(){
       if(ci>-1)pick(ci,true);else{cur=k;userTouched=Date.now();show();rows();scrollTo({top:stage.offsetTop-60,behavior:'smooth'})}
@@ -209,7 +212,7 @@ function load(){
       var k=GK[String(c.symbol).toLowerCase()];
       if(!k||seen[k]||!(c.current_price>0))return;
       seen[k]=1;
-      data[k]={usd:c.current_price,toman:rate>0?c.current_price*rate:null,ch:c.price_change_percentage_24h};
+      data[k]={usd:c.current_price,toman:rate>0?c.current_price*rate:null,ch:c.price_change_percentage_24h,img:c.image};
     })});
     var n=Object.keys(data).length;
     if(!n)throw 0;
