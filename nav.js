@@ -27,3 +27,4 @@ ov.onclick=function(){set(false)};d.addEventListener('click',function(e){if(e.ta
 document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
 if(!document.getElementById('ixFont')){var f=document.createElement('link');f.id='ixFont';f.rel='stylesheet';f.href='https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap';document.head.appendChild(f)}
 })();
+<a href="/crypto.html">ارز دیجیتال</a>
