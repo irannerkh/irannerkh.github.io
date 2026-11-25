@@ -27,6 +27,11 @@
 #status{margin:0 0 10px}
 #q{width:100%;margin-bottom:10px}
 .mb{display:block;margin:14px auto 0;padding:8px 22px;border-radius:20px;border:1px solid var(--gold);background:var(--card);color:var(--gold-soft);font:inherit;cursor:pointer}
+.trade{display:inline-block;padding:5px 12px;border-radius:14px;background:var(--gold);color:#0B0B0E;font-weight:700;font-size:.8rem;text-decoration:none;white-space:nowrap}
+.trade:focus-visible{outline:3px solid var(--gold-soft);outline-offset:2px}
+.cta-box{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:0 0 14px;padding:12px 14px;border:1px solid var(--gold);border-radius:14px;background:var(--card)}
+.cta-box span{font-size:.9rem}
+.sel .trade{pointer-events:auto;margin-top:6px}
 @media(max-width:480px){.stage{height:300px}.sel .big{font-size:1.25rem}.tbl .hide{display:none}}
 </style>
 <meta property="og:type" content="website"><meta property="og:locale" content="fa_IR"><meta property="og:site_name" content="ایران نرخ">
@@ -44,13 +49,15 @@
 <h1>قیمت ارز دیجیتال امروز</h1>
 <p class="lead">قیمت لحظه‌ای ارزهای دیجیتال به تومان و دلار. روی هر سکه‌ی سه‌بعدی یا هر ردیف جدول بزنید تا قیمتش نمایش داده شود.</p>
 
+<div class="cta-box"><span>برای خرید و فروش ارز دیجیتال در نوبیتکس ثبت‌نام کنید.</span><a class="trade" href="https://nobitex.ir/app/signup/?refcode=081FC8F" target="_blank" rel="sponsored noopener">خرید و فروش در نوبیتکس</a></div>
+
 <div class="stage" id="stage" aria-label="سکه‌های سه‌بعدی ارز دیجیتال">
-<div class="sel"><div><h2 id="sName">در حال بارگذاری…</h2><small id="sChg"></small></div><div style="text-align:left"><div class="big" id="sToman">—</div><small id="sUsd"></small></div></div>
+<div class="sel"><div><h2 id="sName">در حال بارگذاری…</h2><small id="sChg"></small></div><div style="text-align:left"><div class="big" id="sToman">—</div><small id="sUsd"></small><br><a class="trade" id="sTrade" href="https://nobitex.ir/app/signup/?refcode=081FC8F" target="_blank" rel="sponsored noopener">خرید و فروش</a></div></div>
 </div>
 
 <p class="hint" id="status">در حال دریافت قیمت‌ها…</p>
 <input id="q" type="search" placeholder="جستجوی ارز (مثلاً بیت‌کوین یا SOL)" autocomplete="off" aria-label="جستجوی ارز">
-<div class="wrap"><table class="tbl" id="tbl"><thead><tr><th>ارز</th><th>قیمت (تومان)</th><th class="hide">قیمت (دلار)</th><th>۲۴ ساعت</th></tr></thead><tbody></tbody></table></div>
+<div class="wrap"><table class="tbl" id="tbl"><thead><tr><th>ارز</th><th>قیمت (تومان)</th><th class="hide">قیمت (دلار)</th><th>۲۴ ساعت</th><th>معامله</th></tr></thead><tbody></tbody></table></div>
 <button id="more" type="button" class="mb">نمایش بیشتر</button>
 <p class="note">ارزها به ترتیب تقریبی ارزش بازار چیده شده‌اند و قیمت دلاری از CoinGecko گرفته می‌شود و هر ۶۰ ثانیه به‌روز می‌شود. قیمت تومانی از ضرب قیمت دلاری در نرخ تتر (همان نرخ صفحه‌ی اصلی) به دست می‌آید. اعداد آموزشی هستند و توصیه‌ی خرید یا فروش نیستند.</p>
 
@@ -79,7 +86,7 @@ var COINS=[
 ];
 var fa=new Intl.NumberFormat('fa-IR',{maximumFractionDigits:0});
 var faUsd=function(v){return v>=100?new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(v):v>=1?v.toFixed(2):v.toFixed(4)};
-var data={},sel=0,cur='btc',userTouched=0,limit=25,query='',INFO={};
+var REF='https://nobitex.ir/app/signup/?refcode=081FC8F';var data={},sel=0,cur='btc',userTouched=0,limit=25,query='',INFO={};
 var MORE='ltc:Litecoin,link:Chainlink,dot:Polkadot,avax:Avalanche,shib:Shiba Inu,bch:Bitcoin Cash,uni:Uniswap,atom:Cosmos,xlm:Stellar,etc:Ethereum Classic,near:NEAR,apt:Aptos,arb:Arbitrum,op:Optimism,fil:Filecoin,inj:Injective,sui:Sui,sei:Sei,algo:Algorand,vet:VeChain,icp:Internet Computer,hbar:Hedera,aave:Aave,mkr:Maker,grt:The Graph,ldo:Lido DAO,rune:THORChain,ftm:Fantom,sand:The Sandbox,mana:Decentraland,axs:Axie Infinity,imx:Immutable,egld:MultiversX,flow:Flow,theta:Theta,xtz:Tezos,eos:EOS,neo:NEO,kava:Kava,snx:Synthetix,crv:Curve,comp:Compound,1inch:1inch,enj:Enjin,chz:Chiliz,gala:Gala,ape:ApeCoin,dydx:dYdX,pepe:Pepe,floki:Floki,bonk:Bonk,wif:dogwifhat,jup:Jupiter,ena:Ethena,ondo:Ondo,render:Render,fet:Fetch.ai,tia:Celestia,pyth:Pyth,w:Wormhole,strk:Starknet,zk:ZKsync,not:Notcoin,hmstr:Hamster Kombat,cati:Catizen,major:Major,dogs:Dogs,gmt:STEPN,lrc:Loopring,bat:Basic Attention,zil:Zilliqa,qtum:Qtum,one:Harmony,iota:IOTA,ens:ENS,ankr:Ankr,cake:PancakeSwap,rose:Oasis,mina:Mina,trump:Trump,pol:Polygon,ray:Raydium,jto:Jito,pendle:Pendle,bome:Book of Meme,ordi:ORDI,blur:Blur,ssv:SSV,gmx:GMX,cvx:Convex,yfi:yearn.finance,sushi:SushiSwap,bal:Balancer,zrx:0x,knc:Kyber,band:Band,uma:UMA,trb:Tellor,lpt:Livepeer,ar:Arweave,stx:Stacks,kas:Kaspa,rvn:Ravencoin,dash:Dash,zec:Zcash,waves:Waves,ont:Ontology,icx:ICON,ethfi:Ether.fi,tao:Bittensor,wld:Worldcoin,pixel:Pixels';
 var LIST=COINS.map(function(c){return c.k});
 COINS.forEach(function(c){INFO[c.k]={n:c.n,s:c.s}});
@@ -163,7 +170,8 @@ function rows(){
   shown.forEach(function(k){
     var d=data[k],tr=document.createElement('tr'),ci=COINS.findIndex(function(c){return c.k===k});
     if(k===cur)tr.className='on';
-    tr.innerHTML='<td>'+INFO[k].n+'<span class="sym">'+INFO[k].s+'</span></td><td class="n">'+(d&&d.toman?fa.format(d.toman):'—')+'</td><td class="n hide">'+(d&&d.usd?'$'+faUsd(d.usd):'—')+'</td><td class="n">'+(d?chg(d.ch):'—')+'</td>';
+    tr.innerHTML='<td>'+INFO[k].n+'<span class="sym">'+INFO[k].s+'</span></td><td class="n">'+(d&&d.toman?fa.format(d.toman):'—')+'</td><td class="n hide">'+(d&&d.usd?'$'+faUsd(d.usd):'—')+'</td><td class="n">'+(d?chg(d.ch):'—')+'</td><td><a class="trade" href="'+REF+'" target="_blank" rel="sponsored noopener">خرید</a></td>';
+    tr.querySelector('.trade').addEventListener('click',function(e){e.stopPropagation();if(window.gtag)gtag('event','referral_click',{coin:k})});
     tr.addEventListener('click',function(){
       if(ci>-1)pick(ci,true);else{cur=k;userTouched=Date.now();show();rows();scrollTo({top:stage.offsetTop-60,behavior:'smooth'})}
     });
