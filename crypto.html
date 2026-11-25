@@ -52,7 +52,7 @@
 <input id="q" type="search" placeholder="جستجوی ارز (مثلاً بیت‌کوین یا SOL)" autocomplete="off" aria-label="جستجوی ارز">
 <div class="wrap"><table class="tbl" id="tbl"><thead><tr><th>ارز</th><th>قیمت (تومان)</th><th class="hide">قیمت (دلار)</th><th>۲۴ ساعت</th></tr></thead><tbody></tbody></table></div>
 <button id="more" type="button" class="mb">نمایش بیشتر</button>
-<p class="note">ارزها به ترتیب تقریبی ارزش بازار چیده شده‌اند و فقط ارزهایی نمایش داده می‌شوند که در نوبیتکس معامله می‌شوند. قیمت‌ها از بازار نوبیتکس گرفته می‌شوند و هر ۳۰ ثانیه به‌روز می‌شوند. اعداد آموزشی هستند و توصیه‌ی خرید یا فروش نیستند.</p>
+<p class="note">ارزها به ترتیب تقریبی ارزش بازار چیده شده‌اند و قیمت دلاری از CoinGecko گرفته می‌شود و هر ۶۰ ثانیه به‌روز می‌شود. قیمت تومانی از ضرب قیمت دلاری در نرخ تتر (همان نرخ صفحه‌ی اصلی) به دست می‌آید. اعداد آموزشی هستند و توصیه‌ی خرید یا فروش نیستند.</p>
 
 <section class="seo">
 <h2>قیمت ارز دیجیتال چطور حساب می‌شود؟</h2>
@@ -145,7 +145,7 @@ function show(){
   var co=INFO[cur],d=data[cur];
   $('sName').textContent=co.n+' ('+co.s+')';
   if(!d){$('sToman').textContent='—';$('sUsd').textContent='';$('sChg').textContent='';return}
-  $('sToman').textContent=fa.format(d.toman)+' تومان';
+  $('sToman').textContent=d.toman?fa.format(d.toman)+' تومان':'—';
   $('sUsd').textContent=d.usd?'$'+faUsd(d.usd):'';
   $('sChg').innerHTML=chg(d.ch);
 }
@@ -163,7 +163,7 @@ function rows(){
   shown.forEach(function(k){
     var d=data[k],tr=document.createElement('tr'),ci=COINS.findIndex(function(c){return c.k===k});
     if(k===cur)tr.className='on';
-    tr.innerHTML='<td>'+INFO[k].n+'<span class="sym">'+INFO[k].s+'</span></td><td class="n">'+(d?fa.format(d.toman):'—')+'</td><td class="n hide">'+(d&&d.usd?'$'+faUsd(d.usd):'—')+'</td><td class="n">'+(d?chg(d.ch):'—')+'</td>';
+    tr.innerHTML='<td>'+INFO[k].n+'<span class="sym">'+INFO[k].s+'</span></td><td class="n">'+(d&&d.toman?fa.format(d.toman):'—')+'</td><td class="n hide">'+(d&&d.usd?'$'+faUsd(d.usd):'—')+'</td><td class="n">'+(d?chg(d.ch):'—')+'</td>';
     tr.addEventListener('click',function(){
       if(ci>-1)pick(ci,true);else{cur=k;userTouched=Date.now();show();rows();scrollTo({top:stage.offsetTop-60,behavior:'smooth'})}
     });
@@ -174,36 +174,42 @@ function rows(){
 }
 $('more').addEventListener('click',function(){limit+=25;rows()});
 $('q').addEventListener('input',function(){query=this.value;rows()});
-function parse(s){
-  LIST.forEach(function(k){
-    var r=s[k+'-rls'],u=s[k+'-usdt'];
-    if(!r&&!u)return;
-    var toman=r?parseFloat(r.latest)/10:null;
-    var usd=k==='usdt'?1:(u?parseFloat(u.latest):null);
-    if(!toman&&usd&&s['usdt-rls'])toman=usd*parseFloat(s['usdt-rls'].latest)/10;
-    if(!(toman>0))return;
-    data[k]={toman:toman,usd:usd,ch:r?parseFloat(r.dayChange):(u?parseFloat(u.dayChange):null)};
+var rate=0,GK={};
+LIST.forEach(function(k){GK[k.toLowerCase()]=k});
+try{rate=parseFloat(localStorage.getItem('usdt_toman'))||0}catch(e){}
+function setRate(v){if(v>0){rate=v;try{localStorage.setItem('usdt_toman',rate)}catch(e){}}return v>0}
+function getRate(){
+  return fetch('https://raw.githubusercontent.com/irannerkh/irannerkh.github.io/data/union.json?t='+Date.now(),{cache:'no-store'})
+  .then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){
+    if(!(j&&j.tether&&setRate(parseFloat(j.tether.price))))throw 0;
+  }).catch(function(){
+    return fetch('https://api.nobitex.ir/market/stats?srcCurrency=usdt&dstCurrency=rls')
+    .then(function(r){return r.json()}).then(function(j){
+      var v=j&&j.stats&&j.stats['usdt-rls']&&parseFloat(j.stats['usdt-rls'].latest);
+      if(v>0)setRate(v/10);
+    }).catch(function(){});
   });
 }
-function req(list){
-  return fetch('https://api.nobitex.ir/market/stats?srcCurrency='+list.join(',')+'&dstCurrency=rls,usdt')
-  .then(function(r){return r.json()}).then(function(j){
-    if(j.status==='ok'&&j.stats){parse(j.stats);return}
-    if(list.length<2)return;
-    var h=list.length>>1;
-    return Promise.all([req(list.slice(0,h)),req(list.slice(h))]);
-  });
+function getCG(page){
+  return fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page='+page+'&price_change_percentage=24h')
+  .then(function(r){if(!r.ok)throw 0;return r.json()});
 }
 function load(){
-  var chunks=[];for(var i=0;i<LIST.length;i+=25)chunks.push(LIST.slice(i,i+25));
-  Promise.all(chunks.map(req)).then(function(){
+  Promise.all([getRate(),Promise.all([getCG(1),getCG(2)]).catch(function(){return getCG(1).then(function(a){return [a]})})]).then(function(res){
+    var pages=res[1],seen={};
+    pages.forEach(function(arr){arr.forEach(function(c){
+      var k=GK[String(c.symbol).toLowerCase()];
+      if(!k||seen[k]||!(c.current_price>0))return;
+      seen[k]=1;
+      data[k]={usd:c.current_price,toman:rate>0?c.current_price*rate:null,ch:c.price_change_percentage_24h};
+    })});
     var n=Object.keys(data).length;
     if(!n)throw 0;
-    $('status').textContent=fa.format(n)+' ارز — آخرین به‌روزرسانی: '+new Date().toLocaleTimeString('fa-IR')+' — منبع: نوبیتکس';
+    $('status').textContent=fa.format(n)+' ارز — آخرین به‌روزرسانی: '+new Date().toLocaleTimeString('fa-IR')+' — منبع: CoinGecko'+(rate>0?' و نرخ تتر':' (نرخ تومانی در دسترس نیست)');
     show();rows();
   }).catch(function(){$('status').textContent='دریافت قیمت‌ها ممکن نشد. چند لحظه بعد دوباره تلاش می‌شود.'});
 }
-rows();show();load();setInterval(load,30000);
+rows();show();load();setInterval(load,60000);
 })();
 </script>
 </body>
