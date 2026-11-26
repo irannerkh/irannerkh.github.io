@@ -29,6 +29,10 @@
 #sName .ci{width:30px;height:30px}
 .wrap{overflow-x:auto}
 #status{margin:0 0 10px}
+.buy{display:inline-block;padding:4px 12px;border-radius:16px;background:var(--gold);color:#0B0B0E;font-weight:700;font-size:.8rem;text-decoration:none;white-space:nowrap}
+.cta2{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--card);border:1px solid var(--gold);border-radius:14px;padding:12px 14px;margin-bottom:14px}
+.cta2 p{margin:0}
+.cta2 .buy{font-size:.95rem;padding:8px 20px;border-radius:12px}
 #q{width:100%;margin-bottom:10px}
 .mb{display:block;margin:14px auto 0;padding:8px 22px;border-radius:20px;border:1px solid var(--gold);background:var(--card);color:var(--gold-soft);font:inherit;cursor:pointer}
 @media(max-width:480px){.stage{height:300px}.sel .big{font-size:1.25rem}.tbl .hide{display:none}}
@@ -53,11 +57,12 @@
 <div class="sel"><div><h2 id="sName">در حال بارگذاری…</h2><small id="sChg"></small></div><div style="text-align:left"><div class="big" id="sToman">—</div><small id="sUsd"></small></div></div>
 </div>
 
+<div class="cta2"><p><b>می‌خواهید خرید یا فروش کنید؟</b><br><small class="hint">ثبت‌نام و معامله در صرافی نوبیتکس</small></p><a class="buy" href="https://nobitex.ir/app/signup/?refcode=2E698F2" target="_blank" rel="sponsored nofollow noopener">خرید و فروش</a></div>
 <p class="hint" id="status">در حال دریافت قیمت‌ها…</p>
 <input id="q" type="search" placeholder="جستجوی ارز (مثلاً بیت‌کوین یا SOL)" autocomplete="off" aria-label="جستجوی ارز">
-<div class="wrap"><table class="tbl" id="tbl"><thead><tr><th>ارز</th><th>قیمت (تومان)</th><th class="hide">قیمت (دلار)</th><th>۲۴ ساعت</th></tr></thead><tbody></tbody></table></div>
+<div class="wrap"><table class="tbl" id="tbl"><thead><tr><th>ارز</th><th>قیمت (تومان)</th><th class="hide">قیمت (دلار)</th><th>۲۴ ساعت</th><th>معامله</th></tr></thead><tbody></tbody></table></div>
 <button id="more" type="button" class="mb">نمایش بیشتر</button>
-<p class="note">ارزها به ترتیب تقریبی ارزش بازار چیده شده‌اند و فقط ارزهایی نمایش داده می‌شوند که در نوبیتکس معامله می‌شوند. قیمت‌ها از بازار نوبیتکس گرفته می‌شوند و هر ۳۰ ثانیه به‌روز می‌شوند. اعداد آموزشی هستند و توصیه‌ی خرید یا فروش نیستند.</p>
+<p class="note">ارزها به ترتیب تقریبی ارزش بازار چیده شده‌اند و فقط ارزهایی نمایش داده می‌شوند که در نوبیتکس معامله می‌شوند. قیمت‌ها از بازار نوبیتکس گرفته می‌شوند و هر ۳۰ ثانیه به‌روز می‌شوند. اعداد آموزشی هستند و توصیه‌ی خرید یا فروش نیستند. دکمه‌های «خرید و فروش» لینک معرفی نوبیتکس هستند و ممکن است برای ایران نرخ درآمد داشته باشند.</p>
 
 <section class="seo">
 <h2>قیمت ارز دیجیتال در ایران چطور تعیین می‌شود؟</h2>
@@ -181,7 +186,8 @@ function rows(){
   shown.forEach(function(k){
     var d=data[k],tr=document.createElement('tr'),ci=COINS.findIndex(function(c){return c.k===k});
     if(k===cur)tr.className='on';
-    tr.innerHTML='<td>'+ico(k)+INFO[k].n+'<span class="sym">'+INFO[k].s+'</span></td><td class="n">'+(d?fa.format(d.toman):'—')+'</td><td class="n hide">'+(d&&d.usd?'$'+faUsd(d.usd):'—')+'</td><td class="n">'+(d?chg(d.ch):'—')+'</td>';
+    tr.innerHTML='<td>'+ico(k)+INFO[k].n+'<span class="sym">'+INFO[k].s+'</span></td><td class="n">'+(d?fa.format(d.toman):'—')+'</td><td class="n hide">'+(d&&d.usd?'$'+faUsd(d.usd):'—')+'</td><td class="n">'+(d?chg(d.ch):'—')+'</td><td><a class="buy" href="https://nobitex.ir/app/signup/?refcode=2E698F2" target="_blank" rel="sponsored nofollow noopener">خرید و فروش</a></td>';
+    tr.querySelector('.buy').addEventListener('click',function(e){e.stopPropagation()});
     tr.addEventListener('click',function(){
       if(ci>-1)pick(ci,true);else{cur=k;userTouched=Date.now();show();rows();scrollTo({top:stage.offsetTop-60,behavior:'smooth'})}
     });
