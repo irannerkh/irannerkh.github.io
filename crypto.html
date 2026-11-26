@@ -22,18 +22,15 @@
 .tbl td.n{direction:ltr;text-align:left;white-space:nowrap}
 .tbl tr{cursor:pointer}
 .tbl tr.on{background:rgba(212,175,55,.08)}
-.ic{position:relative;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;margin-left:8px;vertical-align:middle;overflow:hidden;color:#fff;font-size:.7rem;font-weight:700;line-height:1;font-family:sans-serif}
-.ic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff;border-radius:50%}
 .sym{color:var(--muted);font-size:.8rem;margin-right:6px}
+.ci{position:relative;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;font-size:.75rem;font-weight:700;color:#fff;vertical-align:middle;margin-left:8px;overflow:hidden;flex:none}
+.ci img{position:absolute;inset:0;width:100%;height:100%}
+.ci.ok{background:transparent!important;color:transparent}
+#sName .ci{width:30px;height:30px}
 .wrap{overflow-x:auto}
 #status{margin:0 0 10px}
 #q{width:100%;margin-bottom:10px}
 .mb{display:block;margin:14px auto 0;padding:8px 22px;border-radius:20px;border:1px solid var(--gold);background:var(--card);color:var(--gold-soft);font:inherit;cursor:pointer}
-.trade{display:inline-block;padding:5px 12px;border-radius:14px;background:var(--gold);color:#0B0B0E;font-weight:700;font-size:.8rem;text-decoration:none;white-space:nowrap}
-.trade:focus-visible{outline:3px solid var(--gold-soft);outline-offset:2px}
-.cta-box{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:0 0 14px;padding:12px 14px;border:1px solid var(--gold);border-radius:14px;background:var(--card)}
-.cta-box span{font-size:.9rem}
-.sel .trade{pointer-events:auto;margin-top:6px}
 @media(max-width:480px){.stage{height:300px}.sel .big{font-size:1.25rem}.tbl .hide{display:none}}
 </style>
 <meta property="og:type" content="website"><meta property="og:locale" content="fa_IR"><meta property="og:site_name" content="ایران نرخ">
@@ -41,6 +38,7 @@
 <meta property="og:url" content="https://irannerkh.github.io/crypto.html"><meta property="og:image" content="https://irannerkh.github.io/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"خانه","item":"https://irannerkh.github.io/"},{"@type":"ListItem","position":2,"name":"ارز دیجیتال","item":"https://irannerkh.github.io/crypto.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "تغییر ۲۴ ساعته یعنی چه؟", "acceptedAnswer": {"@type": "Answer", "text": "درصد تغییر قیمت فعلی نسبت به ۲۴ ساعت قبل است. عدد سبز یعنی گران‌تر شده و عدد قرمز یعنی ارزان‌تر شده."}}, {"@type": "Question", "name": "چرا قیمت‌ها با سایت‌های دیگر کمی فرق دارد؟", "acceptedAnswer": {"@type": "Answer", "text": "هر صرافی بازار جداگانه‌ای دارد و قیمت آخرین معامله‌ی خودش را نشان می‌دهد. این صفحه قیمت بازار نوبیتکس را نمایش می‌دهد."}}, {"@type": "Question", "name": "قیمت‌ها هر چند وقت به‌روز می‌شوند؟", "acceptedAnswer": {"@type": "Answer", "text": "حدود هر ۳۰ ثانیه یک‌بار. زمان آخرین به‌روزرسانی بالای جدول نوشته شده است."}}, {"@type": "Question", "name": "آیا این صفحه توصیه‌ی خرید یا فروش است؟", "acceptedAnswer": {"@type": "Answer", "text": "نه. قیمت‌ها فقط برای اطلاع‌رسانی و آموزش هستند و ارزهای دیجیتال نوسان زیادی دارند."}}]}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MYPHGXXE44"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-MYPHGXXE44');</script>
 </head>
@@ -51,21 +49,28 @@
 <h1>قیمت ارز دیجیتال امروز</h1>
 <p class="lead">قیمت لحظه‌ای ارزهای دیجیتال به تومان و دلار. روی هر سکه‌ی سه‌بعدی یا هر ردیف جدول بزنید تا قیمتش نمایش داده شود.</p>
 
-<div class="cta-box"><span>برای خرید و فروش ارز دیجیتال در نوبیتکس ثبت‌نام کنید.</span><a class="trade" href="https://nobitex.ir/app/signup/?refcode=081FC8F" target="_blank" rel="sponsored noopener">خرید و فروش در نوبیتکس</a></div>
-
 <div class="stage" id="stage" aria-label="سکه‌های سه‌بعدی ارز دیجیتال">
-<div class="sel"><div><h2 id="sName">در حال بارگذاری…</h2><small id="sChg"></small></div><div style="text-align:left"><div class="big" id="sToman">—</div><small id="sUsd"></small><br><a class="trade" id="sTrade" href="https://nobitex.ir/app/signup/?refcode=081FC8F" target="_blank" rel="sponsored noopener">خرید و فروش</a></div></div>
+<div class="sel"><div><h2 id="sName">در حال بارگذاری…</h2><small id="sChg"></small></div><div style="text-align:left"><div class="big" id="sToman">—</div><small id="sUsd"></small></div></div>
 </div>
 
 <p class="hint" id="status">در حال دریافت قیمت‌ها…</p>
 <input id="q" type="search" placeholder="جستجوی ارز (مثلاً بیت‌کوین یا SOL)" autocomplete="off" aria-label="جستجوی ارز">
-<div class="wrap"><table class="tbl" id="tbl"><thead><tr><th>ارز</th><th>قیمت (تومان)</th><th class="hide">قیمت (دلار)</th><th>۲۴ ساعت</th><th>معامله</th></tr></thead><tbody></tbody></table></div>
+<div class="wrap"><table class="tbl" id="tbl"><thead><tr><th>ارز</th><th>قیمت (تومان)</th><th class="hide">قیمت (دلار)</th><th>۲۴ ساعت</th></tr></thead><tbody></tbody></table></div>
 <button id="more" type="button" class="mb">نمایش بیشتر</button>
-<p class="note">ارزها به ترتیب تقریبی ارزش بازار چیده شده‌اند و قیمت دلاری از CoinGecko گرفته می‌شود و هر ۶۰ ثانیه به‌روز می‌شود. قیمت تومانی از ضرب قیمت دلاری در نرخ تتر (همان نرخ صفحه‌ی اصلی) به دست می‌آید. اعداد آموزشی هستند و توصیه‌ی خرید یا فروش نیستند.</p>
+<p class="note">ارزها به ترتیب تقریبی ارزش بازار چیده شده‌اند و فقط ارزهایی نمایش داده می‌شوند که در نوبیتکس معامله می‌شوند. قیمت‌ها از بازار نوبیتکس گرفته می‌شوند و هر ۳۰ ثانیه به‌روز می‌شوند. اعداد آموزشی هستند و توصیه‌ی خرید یا فروش نیستند.</p>
 
 <section class="seo">
-<h2>قیمت ارز دیجیتال چطور حساب می‌شود؟</h2>
-<p>قیمت هر ارز دیجیتال در بازار ایران، آخرین معامله‌ی انجام‌شده روی صرافی است. قیمت تومانی با نرخ تتر و تقاضای بازار داخلی تغییر می‌کند و ممکن است با قیمت جهانی کمی فرق داشته باشد.</p>
+<h2>قیمت ارز دیجیتال در ایران چطور تعیین می‌شود؟</h2>
+<p>قیمت تومانی هر ارز دیجیتال از دو چیز ساخته می‌شود: قیمت جهانی آن ارز (به دلار یا تتر) و نرخ تتر به تومان. به همین دلیل، حتی وقتی قیمت جهانی بیت‌کوین یا اتریوم ثابت است، با گران یا ارزان شدن تتر قیمت تومانی آن‌ها هم تغییر می‌کند. عرضه و تقاضای بازار داخلی هم روی قیمت اثر می‌گذارد.</p>
+<h2>تتر چیست و چرا مهم است؟</h2>
+<p>تتر (USDT) ارزی دیجیتال است که ارزش آن را نزدیک به یک دلار آمریکا نگه می‌دارند. بسیاری از معامله‌گران ایرانی از آن به‌عنوان معادل دلار استفاده می‌کنند و قیمت تومانی تتر مبنای بخش بزرگی از قیمت‌گذاری بقیه‌ی ارزهاست. اگر به بازار طلا هم نگاه می‌کنید، رابطه‌ی نرخ دلار و طلا را در صفحه‌ی <a href="/bubble.html">حباب سکه و طلا</a> ببینید.</p>
+<h2>در این صفحه چه چیزی می‌بینید؟</h2>
+<p>قیمت تومانی، قیمت دلاری و تغییر ۲۴ ساعته‌ی ده‌ها ارز دیجیتال، به ترتیب تقریبی ارزش بازار. فقط ارزهایی نمایش داده می‌شوند که در نوبیتکس معامله می‌شوند. روی هر ارز بزنید تا سکه‌ی سه‌بعدی و قیمتش نمایش داده شود، یا با کادر جستجو ارز مورد نظرتان را پیدا کنید. قیمت‌های جهانی طلا، نقره و نفت را در صفحه‌ی <a href="/prices.html">قیمت‌های جهانی</a> و نمودار زنده‌ی بازار را در صفحه‌ی <a href="/chart.html">نمودار</a> ببینید.</p>
+<h2>سوالات متداول</h2>
+<details><summary>تغییر ۲۴ ساعته یعنی چه؟</summary><p>درصد تغییر قیمت فعلی نسبت به ۲۴ ساعت قبل است. عدد سبز یعنی گران‌تر شده و عدد قرمز یعنی ارزان‌تر شده.</p></details>
+<details><summary>چرا قیمت‌ها با سایت‌های دیگر کمی فرق دارد؟</summary><p>هر صرافی بازار جداگانه‌ای دارد و قیمت آخرین معامله‌ی خودش را نشان می‌دهد. این صفحه قیمت بازار نوبیتکس را نمایش می‌دهد.</p></details>
+<details><summary>قیمت‌ها هر چند وقت به‌روز می‌شوند؟</summary><p>حدود هر ۳۰ ثانیه یک‌بار. زمان آخرین به‌روزرسانی بالای جدول نوشته شده است.</p></details>
+<details><summary>آیا این صفحه توصیه‌ی خرید یا فروش است؟</summary><p>نه. قیمت‌ها فقط برای اطلاع‌رسانی و آموزش هستند و ارزهای دیجیتال نوسان زیادی دارند.</p></details>
 </section>
 </main>
 
@@ -88,7 +93,7 @@ var COINS=[
 ];
 var fa=new Intl.NumberFormat('fa-IR',{maximumFractionDigits:0});
 var faUsd=function(v){return v>=100?new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(v):v>=1?v.toFixed(2):v.toFixed(4)};
-var REF='https://nobitex.ir/app/signup/?refcode=081FC8F';var data={},sel=0,cur='btc',userTouched=0,limit=25,query='',INFO={};
+var data={},sel=0,cur='btc',userTouched=0,limit=25,query='',INFO={};
 var MORE='ltc:Litecoin,link:Chainlink,dot:Polkadot,avax:Avalanche,shib:Shiba Inu,bch:Bitcoin Cash,uni:Uniswap,atom:Cosmos,xlm:Stellar,etc:Ethereum Classic,near:NEAR,apt:Aptos,arb:Arbitrum,op:Optimism,fil:Filecoin,inj:Injective,sui:Sui,sei:Sei,algo:Algorand,vet:VeChain,icp:Internet Computer,hbar:Hedera,aave:Aave,mkr:Maker,grt:The Graph,ldo:Lido DAO,rune:THORChain,ftm:Fantom,sand:The Sandbox,mana:Decentraland,axs:Axie Infinity,imx:Immutable,egld:MultiversX,flow:Flow,theta:Theta,xtz:Tezos,eos:EOS,neo:NEO,kava:Kava,snx:Synthetix,crv:Curve,comp:Compound,1inch:1inch,enj:Enjin,chz:Chiliz,gala:Gala,ape:ApeCoin,dydx:dYdX,pepe:Pepe,floki:Floki,bonk:Bonk,wif:dogwifhat,jup:Jupiter,ena:Ethena,ondo:Ondo,render:Render,fet:Fetch.ai,tia:Celestia,pyth:Pyth,w:Wormhole,strk:Starknet,zk:ZKsync,not:Notcoin,hmstr:Hamster Kombat,cati:Catizen,major:Major,dogs:Dogs,gmt:STEPN,lrc:Loopring,bat:Basic Attention,zil:Zilliqa,qtum:Qtum,one:Harmony,iota:IOTA,ens:ENS,ankr:Ankr,cake:PancakeSwap,rose:Oasis,mina:Mina,trump:Trump,pol:Polygon,ray:Raydium,jto:Jito,pendle:Pendle,bome:Book of Meme,ordi:ORDI,blur:Blur,ssv:SSV,gmx:GMX,cvx:Convex,yfi:yearn.finance,sushi:SushiSwap,bal:Balancer,zrx:0x,knc:Kyber,band:Band,uma:UMA,trb:Tellor,lpt:Livepeer,ar:Arweave,stx:Stacks,kas:Kaspa,rvn:Ravencoin,dash:Dash,zec:Zcash,waves:Waves,ont:Ontology,icx:ICON,ethfi:Ether.fi,tao:Bittensor,wld:Worldcoin,pixel:Pixels';
 var LIST=COINS.map(function(c){return c.k});
 COINS.forEach(function(c){INFO[c.k]={n:c.n,s:c.s}});
@@ -150,17 +155,15 @@ if(ok){
 }
 
 /* ---------- data ---------- */
-function icon(k,u){
-  var sy=(INFO[k]&&INFO[k].s)||k,h=0,i;for(i=0;i<sy.length;i++)h=(h*31+sy.charCodeAt(i))%360;
-  var p1='https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/32/color/'+encodeURIComponent(k.toLowerCase())+'.png';
-  var f=/^https:\/\//.test(u||'')?u:'';
-  return '<span class="ic" style="background:hsl('+h+',55%,42%)">'+sy.charAt(0)+'<img src="'+p1+'" data-f="'+f+'" alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer" onerror="var f=this.dataset.f;if(f){this.dataset.f=\'\';this.src=f}else{this.remove()}"></span>';
+function ico(k){
+  var h=0,t=INFO[k].s;for(var i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))%360;
+  return '<span class="ci" style="background:hsl('+h+',50%,38%)">'+t.charAt(0)+'<img src="https://cdn.jsdelivr.net/npm/cryptocurrency-icons@0.18.1/32/color/'+k+'.png" alt="" width="26" height="26" loading="lazy" onload="this.parentNode.className=\'ci ok\'" onerror="this.remove()"></span>';
 }
 function show(){
   var co=INFO[cur],d=data[cur];
-  $('sName').innerHTML=icon(cur,d&&d.img)+co.n+' ('+co.s+')';
+  $('sName').innerHTML=ico(cur)+co.n+' ('+co.s+')';
   if(!d){$('sToman').textContent='—';$('sUsd').textContent='';$('sChg').textContent='';return}
-  $('sToman').textContent=d.toman?fa.format(d.toman)+' تومان':'—';
+  $('sToman').textContent=fa.format(d.toman)+' تومان';
   $('sUsd').textContent=d.usd?'$'+faUsd(d.usd):'';
   $('sChg').innerHTML=chg(d.ch);
 }
@@ -178,8 +181,7 @@ function rows(){
   shown.forEach(function(k){
     var d=data[k],tr=document.createElement('tr'),ci=COINS.findIndex(function(c){return c.k===k});
     if(k===cur)tr.className='on';
-    tr.innerHTML='<td>'+icon(k,d&&d.img)+INFO[k].n+'<span class="sym">'+INFO[k].s+'</span></td><td class="n">'+(d&&d.toman?fa.format(d.toman):'—')+'</td><td class="n hide">'+(d&&d.usd?'$'+faUsd(d.usd):'—')+'</td><td class="n">'+(d?chg(d.ch):'—')+'</td><td><a class="trade" href="'+REF+'" target="_blank" rel="sponsored noopener">خرید</a></td>';
-    tr.querySelector('.trade').addEventListener('click',function(e){e.stopPropagation();if(window.gtag)gtag('event','referral_click',{coin:k})});
+    tr.innerHTML='<td>'+ico(k)+INFO[k].n+'<span class="sym">'+INFO[k].s+'</span></td><td class="n">'+(d?fa.format(d.toman):'—')+'</td><td class="n hide">'+(d&&d.usd?'$'+faUsd(d.usd):'—')+'</td><td class="n">'+(d?chg(d.ch):'—')+'</td>';
     tr.addEventListener('click',function(){
       if(ci>-1)pick(ci,true);else{cur=k;userTouched=Date.now();show();rows();scrollTo({top:stage.offsetTop-60,behavior:'smooth'})}
     });
@@ -190,42 +192,40 @@ function rows(){
 }
 $('more').addEventListener('click',function(){limit+=25;rows()});
 $('q').addEventListener('input',function(){query=this.value;rows()});
-var rate=0,GK={};
-LIST.forEach(function(k){GK[k.toLowerCase()]=k});
-try{rate=parseFloat(localStorage.getItem('usdt_toman'))||0}catch(e){}
-function setRate(v){if(v>0){rate=v;try{localStorage.setItem('usdt_toman',rate)}catch(e){}}return v>0}
-function getRate(){
-  return fetch('https://raw.githubusercontent.com/irannerkh/irannerkh.github.io/data/union.json?t='+Date.now(),{cache:'no-store'})
-  .then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){
-    if(!(j&&j.tether&&setRate(parseFloat(j.tether.price))))throw 0;
-  }).catch(function(){
-    return fetch('https://api.nobitex.ir/market/stats?srcCurrency=usdt&dstCurrency=rls')
-    .then(function(r){return r.json()}).then(function(j){
-      var v=j&&j.stats&&j.stats['usdt-rls']&&parseFloat(j.stats['usdt-rls'].latest);
-      if(v>0)setRate(v/10);
-    }).catch(function(){});
+function parse(s){
+  LIST.forEach(function(k){
+    var r=s[k+'-rls'],u=s[k+'-usdt'];
+    if(!r&&!u)return;
+    var toman=r?parseFloat(r.latest)/10:null;
+    var usd=k==='usdt'?1:(u?parseFloat(u.latest):null);
+    if(!toman&&usd&&s['usdt-rls'])toman=usd*parseFloat(s['usdt-rls'].latest)/10;
+    if(!(toman>0))return;
+    data[k]={toman:toman,usd:usd,ch:r?parseFloat(r.dayChange):(u?parseFloat(u.dayChange):null)};
   });
 }
-function getCG(page){
-  return fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page='+page+'&price_change_percentage=24h')
-  .then(function(r){if(!r.ok)throw 0;return r.json()});
+function req(list,dst){
+  dst=dst||'rls,usdt';
+  return fetch('https://apiv2.nobitex.ir/market/stats?srcCurrency='+list.join(',')+'&dstCurrency='+dst)
+  .then(function(r){return r.json()}).then(function(j){
+    if(j.status==='ok'&&j.stats){parse(j.stats);return}
+    if(list.length<2)return;
+    var h=list.length>>1;
+    return Promise.all([req(list.slice(0,h),dst),req(list.slice(h),dst)]);
+  });
 }
 function load(){
-  Promise.all([getRate(),Promise.all([getCG(1),getCG(2)]).catch(function(){return getCG(1).then(function(a){return [a]})})]).then(function(res){
-    var pages=res[1],seen={};
-    pages.forEach(function(arr){arr.forEach(function(c){
-      var k=GK[String(c.symbol).toLowerCase()];
-      if(!k||seen[k]||!(c.current_price>0))return;
-      seen[k]=1;
-      data[k]={usd:c.current_price,toman:rate>0?c.current_price*rate:null,ch:c.price_change_percentage_24h,img:c.image};
-    })});
+  var rest=LIST.filter(function(k){return k!=='usdt'});
+  var chunks=[];for(var i=0;i<rest.length;i+=25)chunks.push(rest.slice(i,i+25));
+  var jobs=chunks.map(function(c){return req(c)});
+  jobs.push(req(['usdt'],'rls'));
+  Promise.all(jobs).then(function(){
     var n=Object.keys(data).length;
     if(!n)throw 0;
-    $('status').textContent=fa.format(n)+' ارز — آخرین به‌روزرسانی: '+new Date().toLocaleTimeString('fa-IR')+' — منبع: CoinGecko'+(rate>0?' و نرخ تتر':' (نرخ تومانی در دسترس نیست)');
+    $('status').textContent=fa.format(n)+' ارز — آخرین به‌روزرسانی: '+new Date().toLocaleTimeString('fa-IR')+' — منبع: نوبیتکس';
     show();rows();
   }).catch(function(){$('status').textContent='دریافت قیمت‌ها ممکن نشد. چند لحظه بعد دوباره تلاش می‌شود.'});
 }
-rows();show();load();setInterval(load,60000);
+rows();show();load();setInterval(load,30000);
 })();
 </script>
 </body>
